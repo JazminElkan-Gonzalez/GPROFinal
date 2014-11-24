@@ -1,0 +1,73 @@
+import time
+import random
+from graphics import *
+
+
+# Tile size of the level
+LEVEL_WIDTH = 50
+LEVEL_HEIGHT = 50
+
+# Tile size of the viewport (through which you view the level)
+VIEWPORT_WIDTH = 21
+VIEWPORT_HEIGHT = 21   
+
+# Pixel size of a tile (which gives you the size of the window)
+TILE_SIZE = 24
+
+# Pixel size of the viewport
+WINDOW_WIDTH = TILE_SIZE * VIEWPORT_WIDTH
+WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
+
+# Pixel size of the panel on the right where you can display stuff
+WINDOW_RIGHTPANEL = 200
+
+
+#############################################################
+# 
+# The class hierarchy for objects that you can interact with
+# in the world
+#
+# Roughly modeled from the corresponding hierarchy in our
+# adventure game
+#
+
+# A helper function that lets you log information to the console
+# with some timing information. I found this super useful to 
+# debug tricky event-based problems.
+#
+def log (message):
+    print time.strftime("[%H:%M:%S]",time.localtime()),message
+
+    
+
+
+
+# A simple event class that checks for user input.
+# It re-enqueues itself after the check.
+
+MOVE = {
+    'Left': (-1,0),
+    'Right': (1,0),
+    'Up' : (0,-1),
+    'Down' : (0,1)
+}
+
+
+
+#
+# Create the right-side panel that can be used to display interesting
+# information to the player
+#
+def create_panel (window):
+    fg = Rectangle(Point(WINDOW_WIDTH+1,-20),
+                   Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL+20,WINDOW_HEIGHT+20))
+    fg.setFill("darkgray")
+    fg.setOutline("darkgray")
+    fg.draw(window)
+    fg = Text(Point(WINDOW_WIDTH+100,
+                    30),"Olinland Redux")
+    fg.setSize(24)
+    fg.setStyle("italic")
+    fg.setFill("red")
+    fg.draw(window)
+
