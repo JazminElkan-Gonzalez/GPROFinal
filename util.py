@@ -10,7 +10,6 @@ LEVEL_HEIGHT = 50
 # Tile size of the viewport (through which you view the level)
 VIEWPORT_WIDTH = 21
 VIEWPORT_HEIGHT = 21   
-
 # Pixel size of a tile (which gives you the size of the window)
 TILE_SIZE = 24
 

@@ -36,6 +36,14 @@ class Thing (Root):
     def description (self):
         return self._description
 
+    def update_pos(self, dx, dy, nx, ny):
+        vX = VIEWPORT_WIDTH-1
+        vY = VIEWPORT_HEIGHT-1
+        self._sprite.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
+        if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+            self._sprite.undraw()
+
+
     # creating a thing does not put it in play -- you have to 
     # call materialize, passing in the screen and the position
     # where you want it to appear

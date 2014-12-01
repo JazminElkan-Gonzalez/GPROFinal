@@ -2,7 +2,7 @@
 # 
 # The description of the world and the screen which displays
 from util import *
-
+from tree import *
 # the world
 #
 # A level contains the background stuff that you can't really
@@ -15,7 +15,8 @@ from util import *
 # 0 empty   (light green rectangle)
 # 1 grass   (green rectangle)
 # 2 tree    (sienna rectangle)
-#
+# 30s unwalkable     (color depends)
+# 40s walkable       (color depends)
 # you'll probably want to make nicer sprites at some point.
 
 
@@ -41,4 +42,5 @@ class Level (object):
     def tile (self,x,y):
         return self._map[self._pos(x,y)]
 
-
+    def set_tile(self,x,y, num):
+        self._map[self._pos(x,y)] = num

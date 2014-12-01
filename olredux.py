@@ -39,8 +39,9 @@ def main ():
     q = EventQueue()
 
     OlinStatue().materialize(scr,20,20)
-    Rat("Pinky","A rat").register(q,40).materialize(scr,30,30)
-    Rat("Brain","A rat with a big head").register(q,60).materialize(scr,10,30)
+
+    # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
+    Rat("Pinky","A rat").register(q,400).materialize(scr,30,30)
 
     create_panel(window)
 

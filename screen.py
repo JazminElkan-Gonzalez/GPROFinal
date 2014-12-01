@@ -28,6 +28,7 @@ class Screen (object):
         bg.setOutline("black")
         bg.draw(window)
         self._current = []
+        self._objects = []
         # here, you want to draw the tiles that are visible
         # and possible record them for future manipulation
         # you'll probably want to change this at some point to
@@ -35,7 +36,6 @@ class Screen (object):
         self.init_move(cy,  cx)
 
     def move(self, dx, dy, cx, cy):
-        print dx
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
         for tile in self._current:
@@ -43,6 +43,7 @@ class Screen (object):
             if tile.p1.x < 0 and tile.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.p1.y < 0 and title.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
                 tile.undraw()
                 self._current.remove(tile)
+
 
     def find_colors(self, x,y, elt):
         if self.tile(x,y) == 0:
@@ -83,6 +84,7 @@ class Screen (object):
         item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,
                            (y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
         item.sprite().draw(self._window)
+        self._level.set_tile(x,y,3*10 + self._level.tile(x,y))
         # WRITE ME!   You'll have to figure out how to manage these
         # because chances are when you scroll these will not move!
 
