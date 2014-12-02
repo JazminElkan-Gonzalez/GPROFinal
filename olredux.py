@@ -41,7 +41,7 @@ def main ():
     OlinStatue().materialize(scr,20,20)
 
     # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
-    Rat("Pinky","A rat").register(q,400).materialize(scr,30,30)
+    OBJECTS.append(Rat("Pinky","A rat").register(q,400).materialize(scr,30,30))
 
     create_panel(window)
 

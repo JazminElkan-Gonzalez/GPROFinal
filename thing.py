@@ -20,6 +20,23 @@ class Thing (Root):
     def __str__ (self):
         return "<"+self.name()+">"
 
+
+    def register (self,q,freq):
+        self._freq = freq
+        q.enqueue(freq,self)
+        return self
+
+    def walk(self, dx, dy):
+        nx = self._x + dx
+        ny = self._y + dy
+        if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
+            self._y = ny
+            self._x = nx
+            self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
+            if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                self._sprite.undraw()
+
+
     # return the sprite for display purposes
     def sprite (self):
         return self._sprite

@@ -24,32 +24,6 @@ class Rat (Character):
     # use method chaining, which is cool (though not as cool as
     # bowties...)
 
-    def register (self,q,freq):
-        self._freq = freq
-        q.enqueue(freq,self)
-        return self
-
-    def walk(self, dx, dy):
-        nx = self._x + dx
-        ny = self._y + dy
-        if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1  or self._screen.tile(nx,ny)/10 >= 4:
-            self._screen._level.set_tile(self._x,self._y,self._screen._level.tile(self._x,self._y)%10)
-            self._y = ny
-            self._x = nx
-            self._sprite.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
-            if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                self._sprite.undraw()
-            self._screen._level.set_tile(self._x,self._y,3*10 + self._screen._level.tile(self._x,self._y))
-
-
-    def materialize (self,screen,x,y):
-        screen.add(self,x,y)
-        self._screen = screen
-        self._screen._objects.append(self)
-        self._x = x
-        self._y = y
-        return self
-
     # this gets called from event queue when the time is right
 
     def event (self,q):

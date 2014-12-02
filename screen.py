@@ -28,7 +28,6 @@ class Screen (object):
         bg.setOutline("black")
         bg.draw(window)
         self._current = []
-        self._objects = []
         # here, you want to draw the tiles that are visible
         # and possible record them for future manipulation
         # you'll probably want to change this at some point to
@@ -84,7 +83,6 @@ class Screen (object):
         item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,
                            (y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
         item.sprite().draw(self._window)
-        self._level.set_tile(x,y,3*10 + self._level.tile(x,y))
         # WRITE ME!   You'll have to figure out how to manage these
         # because chances are when you scroll these will not move!
 

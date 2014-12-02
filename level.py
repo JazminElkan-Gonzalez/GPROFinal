@@ -41,6 +41,3 @@ class Level (object):
     # return the tile at a given tile position in the level
     def tile (self,x,y):
         return self._map[self._pos(x,y)]
-
-    def set_tile(self,x,y, num):
-        self._map[self._pos(x,y)] = num

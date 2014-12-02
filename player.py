@@ -24,14 +24,23 @@ class Player (Character):
     def move (self,dx,dy):
         nx = self._x + dx
         ny = self._y + dy
-        if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1  or self._screen.tile(nx,ny)/10 >= 4:
-            self._screen._level.set_tile(self._x,self._y,self._screen._level.tile(self._x,self._y)%10)
-            self._y = ny
-            self._x = nx
-            self._screen._level.set_tile(self._x,self._y,3*10 + self._screen._level.tile(self._x,self._y))
-            self._screen.move(dx, dy, nx, ny)
-            for thing in self._screen._objects:
-                thing.update_pos(dx, dy, nx, ny)
+        if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
+            for i in range(len(OBJECTS)):
+                print OBJECTS[i]._name + "(" + str(OBJECTS[i]._x) +"," + str(OBJECTS[i]._y) + ") " + "(" + str(nx) +"," + str(ny) + ") "
+                if OBJECTS[i]._x == nx and  OBJECTS[i]._y == ny:
+                    if  OBJECTS[i].is_walkable():
+                        self._y = ny
+                        self._x = nx
+                        self._screen.move(dx, dy, nx, ny)
+                        for thing in  OBJECTS:
+                            thing.update_pos(dx, dy, nx, ny)
+                    break;
+                elif i == len(OBJECTS) -1:
+                    self._y = ny
+                    self._x = nx
+                    self._screen.move(dx, dy, nx, ny)
+                    for thing in OBJECTS:
+                        thing.update_pos(dx, dy, nx, ny)
 
 
 
