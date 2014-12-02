@@ -4,8 +4,8 @@ from screen import *
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,name):
-        Character.__init__(self,name,"Yours truly")
+    def __init__ (self,health,name):
+        Character.__init__(self,name,"Yours truly", health)
         log("Player.__init__ for "+str(self))
         pic = 't_android_red.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
@@ -26,21 +26,22 @@ class Player (Character):
         ny = self._y + dy
         if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
             for i in range(len(OBJECTS)):
-                print OBJECTS[i]._name + "(" + str(OBJECTS[i]._x) +"," + str(OBJECTS[i]._y) + ") " + "(" + str(nx) +"," + str(ny) + ") "
                 if OBJECTS[i]._x == nx and  OBJECTS[i]._y == ny:
                     if  OBJECTS[i].is_walkable():
                         self._y = ny
                         self._x = nx
                         self._screen.move(dx, dy, nx, ny)
                         for thing in  OBJECTS:
-                            thing.update_pos(dx, dy, nx, ny)
+                            if thing._name !=  "...what's your name, bub?...":
+                                thing.update_pos(dx, dy, nx, ny)
                     break;
                 elif i == len(OBJECTS) -1:
                     self._y = ny
                     self._x = nx
                     self._screen.move(dx, dy, nx, ny)
                     for thing in OBJECTS:
-                        thing.update_pos(dx, dy, nx, ny)
+                        if thing._name !=  "...what's your name, bub?...":
+                            thing.update_pos(dx, dy, nx, ny)
 
 
 

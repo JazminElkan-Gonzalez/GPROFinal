@@ -38,14 +38,14 @@ def main ():
 
     q = EventQueue()
 
-    OlinStatue().materialize(scr,20,20)
+    OlinStatue("Olin statue","A statue of F. W. Olin", 5000).materialize(scr,20,20)
 
     # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
-    OBJECTS.append(Rat("Pinky","A rat").register(q,400).materialize(scr,30,30))
+    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
 
     create_panel(window)
 
-    p = Player("...what's your name, bub?...").materialize(scr,25,25)
+    p = Player(30, "...what's your name, bub?...").materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
 

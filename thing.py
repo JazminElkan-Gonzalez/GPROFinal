@@ -11,10 +11,12 @@ from util import *
 # assign it a specific sprite (see the OlinStatue below).
 # 
 class Thing (Root):
-    def __init__ (self,name,desc):
+    def __init__ (self,name,desc, health):
         self._name = name
         self._description = desc
+        self._health = health
         self._sprite = Text(Point(TILE_SIZE/2,TILE_SIZE/2),"?")
+        OBJECTS.append(self)
         log("Thing.__init__ for "+str(self))
 
     def __str__ (self):
@@ -33,8 +35,9 @@ class Thing (Root):
             self._y = ny
             self._x = nx
             self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
-            if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                self._sprite.undraw()
+            if type(self._sprite)  != "Image":
+                if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                    self._sprite.undraw()
 
 
     # return the sprite for display purposes

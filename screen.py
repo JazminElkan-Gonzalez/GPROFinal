@@ -57,8 +57,6 @@ class Screen (object):
 
 
     def init_move(self, cy, cx):
-        for tile in self._current:
-            tile.undraw()
         dx = (VIEWPORT_WIDTH-1)/2
         dy = (VIEWPORT_HEIGHT-1)/2
         for y in range(LEVEL_HEIGHT):
