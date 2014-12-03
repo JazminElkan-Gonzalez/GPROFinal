@@ -52,7 +52,7 @@ class Screen (object):
         q.enqueue(freq,self)
         return self
 
-    def move(self, dx, dy, cx, cy):
+    def move(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
         for tile in self._current:
@@ -86,7 +86,7 @@ class Screen (object):
                 self._current.append(elt)
                 self.find_colors(x,y, elt)
                 elt.draw(self._window)
-        self.move(0,0, cx, cy)
+        self.move(0,0)
 
 
     # return the tile at a given tile position

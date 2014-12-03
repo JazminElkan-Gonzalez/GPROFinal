@@ -35,10 +35,18 @@ class Thing (Root):
             self._y = ny
             self._x = nx
             self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
-            if type(self._sprite)  != "Image":
-                if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                    self._sprite.undraw()
+            self.antiDraw()
+            # print "same: ", isinstance(self._sprite, Image)
 
+    def antiDraw(self):
+        if isinstance(self._sprite, Image):
+            xLeft = self._sprite.getAnchor().x - TILE_SIZE/2
+            yLeft = self._sprite.getAnchor().y - TILE_SIZE/2
+            if xLeft < 0 and xLeft/TILE_SIZE +1 > VIEWPORT_WIDTH and yLeft < 0 and yLeft/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                self._sprite.undraw()        
+        else:            
+            if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                self._sprite.undraw()        
 
     # return the sprite for display purposes
     def sprite (self):
@@ -56,12 +64,11 @@ class Thing (Root):
     def description (self):
         return self._description
 
-    def update_pos(self, dx, dy, nx, ny):
+    def update_pos(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
         self._sprite.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
-        if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-            self._sprite.undraw()
+        self.antiDraw()
 
 
     # creating a thing does not put it in play -- you have to 

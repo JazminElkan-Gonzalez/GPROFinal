@@ -13,6 +13,9 @@ class Player (Character):
     def is_player (self):
         return True
 
+    def update_pos(self, dx, dy):
+        pass
+
 
     # The move() method of the Player is called when you 
     # press movement keys. 
@@ -27,21 +30,21 @@ class Player (Character):
         if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
             for i in range(len(OBJECTS)):
                 if OBJECTS[i]._x == nx and  OBJECTS[i]._y == ny:
-                    if  OBJECTS[i].is_walkable():
+                    if OBJECTS[i].is_walkable():
                         self._y = ny
                         self._x = nx
-                        self._screen.move(dx, dy, nx, ny)
-                        for thing in  OBJECTS:
-                            if thing._name !=  "...what's your name, bub?...":
-                                thing.update_pos(dx, dy, nx, ny)
-                    break;
+                        self._screen.move(dx, dy)
+                        for thing in OBJECTS:
+                            # if thing._name !=  "...what's your name, bub?...":
+                            thing.update_pos(dx, dy)
+                    break
                 elif i == len(OBJECTS) -1:
                     self._y = ny
                     self._x = nx
-                    self._screen.move(dx, dy, nx, ny)
+                    self._screen.move(dx, dy)
                     for thing in OBJECTS:
-                        if thing._name !=  "...what's your name, bub?...":
-                            thing.update_pos(dx, dy, nx, ny)
+                        # if thing._name !=  "...what's your name, bub?...":
+                        thing.update_pos(dx, dy)
 
 
 

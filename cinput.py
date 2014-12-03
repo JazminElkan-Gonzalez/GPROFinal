@@ -7,6 +7,9 @@ class CheckInput (object):
 
     def event (self,q):
         key = self._window.checkKey()
+        mouse = self._window.checkMouse()
+        if mouse != None:
+            pass
         if key == 'q':
             self._window.close()
             exit(0)

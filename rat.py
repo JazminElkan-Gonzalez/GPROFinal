@@ -15,6 +15,7 @@ class Rat (Character):
         rect.setFill("red")
         rect.setOutline("red")
         self._sprite = rect
+        print "Type rat: ", type(rect)
         self._direction = random.randrange(4)
 
     # A helper method to register the Rat with the event queue
