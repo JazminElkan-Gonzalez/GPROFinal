@@ -48,4 +48,5 @@ class Rat (Character):
                 thing._health = thing._health - 5
                 words = Text(self._sprite.p1, "SQUEE")
                 words.draw(self._screen._window)
+                self._screen.addText(words)
                 return words

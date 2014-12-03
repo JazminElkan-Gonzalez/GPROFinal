@@ -22,6 +22,7 @@ class Screen (object):
         self._cx = cx    # the initial center tile position 
         self._cy = cy    #  of the screen
         self._things = []
+        self._texts = []
         # Background is black
         bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
         bg.setFill("black")
@@ -33,6 +34,23 @@ class Screen (object):
         # you'll probably want to change this at some point to
         # get scrolling to work right...
         self.init_move(cy,  cx)
+
+    def addText(self,text):
+        self._texts.append((text,0))
+
+    def event(self,q):
+        undrawList = [x for x in self._texts if x[1] > 50]
+        self._texts[:] = [x for x in self._texts if x[1] <= 50]
+        for text,age in undrawList:
+            text.undraw()
+        for i in range(len(self._texts)):
+            self._texts[i] = (self._texts[i][0], self._texts[i][1] + 1)
+        self.register(q,1)
+
+    def register (self,q,freq):
+        self._freq = freq
+        q.enqueue(freq,self)
+        return self
 
     def move(self, dx, dy, cx, cy):
         vX = VIEWPORT_WIDTH-1

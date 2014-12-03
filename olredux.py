@@ -48,6 +48,7 @@ def main ():
     p = Player(30, "...what's your name, bub?...").materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
+    q.enqueue(1,scr)
 
     while True:
         # Grab the next event from the queue if it's ready
