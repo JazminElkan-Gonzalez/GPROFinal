@@ -60,13 +60,14 @@ MOVE = {
 def create_panel (window):
     fg = Rectangle(Point(WINDOW_WIDTH+1,-20),
                    Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL+20,WINDOW_HEIGHT+20))
-    fg.setFill("darkgray")
-    fg.setOutline("darkgray")
-    fg.draw(window)
-    fg = Text(Point(WINDOW_WIDTH+100,
-                    30),"Olinland Redux")
-    fg.setSize(24)
-    fg.setStyle("italic")
-    fg.setFill("red")
+    fg.setFill("lightgray")
+    fg.setOutline("lightgray")
     fg.draw(window)
 
+def lost (window):
+    t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU LOST!')
+    t.setSize(36)
+    t.setTextColor('red')
+    t.draw(window)
+    window.getKey()
+    exit(0)

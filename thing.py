@@ -48,6 +48,13 @@ class Thing (Root):
             if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
                 self._sprite.undraw()        
 
+    def updateHealth(self, amount):
+        self._health = health + amount
+        words = Text(self._sprite.p1, "SQUEE")
+        words.draw(self._screen._window)
+        self._screen.addText(words)
+
+
     # return the sprite for display purposes
     def sprite (self):
         return self._sprite

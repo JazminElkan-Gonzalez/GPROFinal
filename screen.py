@@ -29,11 +29,41 @@ class Screen (object):
         bg.setOutline("black")
         bg.draw(window)
         self._current = []
-        # here, you want to draw the tiles that are visible
-        # and possible record them for future manipulation
-        # you'll probably want to change this at some point to
-        # get scrolling to work right...
+        self._hub = "Default"
         self.init_move(cy,  cx)
+        self._buttons = []
+
+    def makeButton(self, text, pos, part):
+        start = 2*TILE_SIZE
+        xLeft = WINDOW_WIDTH+TILE_SIZE
+        xRight = WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE
+        xMid = WINDOW_WIDTH+0.5*WINDOW_RIGHTPANEL
+
+        button =  Rectangle(Point(xLeft,start+((3*pos+1)*part)),Point(xRight,start+(3*pos+3)*part))
+        buttonText = Text(Point(xMid, start+(3*pos+2)*part), text)
+        self._buttons.append(button)
+        self._buttons.append(buttonText)
+        button.setFill("darkgrey")
+        button.draw(self._window)
+        buttonText.draw(self._window)
+
+    def makeHub(self):
+        if self._hub == "Default":
+            # undraw stuff
+            pass
+        if self._hub == "Zombie":
+            part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
+            self.makeButton("Walk", 0, part)
+            self.makeButton("Attack", 1, part)
+            self.makeButton("Follow", 2, part)
+            self.makeButton("Group", 3, part)
+            self.makeButton("Mode", 4, part)
+
+
+
+            
+        if self._hub == "NPC":
+            pass
 
     def addText(self,text):
         self._texts.append((text,0))
@@ -81,29 +111,21 @@ class Screen (object):
             for x in range(LEVEL_WIDTH):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
-                elt = Rectangle(Point(sx,sy),
-                                Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                 self._current.append(elt)
                 self.find_colors(x,y, elt)
                 elt.draw(self._window)
         self.move(0,0)
 
 
-    # return the tile at a given tile position
     def tile (self,x,y):
         return self._level.tile(x,y)
 
-    # add a thing to the screen at a given position
     def add (self,item,x,y):
-        # first, move object into given position
-        item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,
-                           (y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
+        item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
         item.sprite().draw(self._window)
-        # WRITE ME!   You'll have to figure out how to manage these
-        # because chances are when you scroll these will not move!
 
 
-    # helper method to get at underlying window
     def window (self):
         return self._window
 
