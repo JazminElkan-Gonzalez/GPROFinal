@@ -34,11 +34,10 @@ class CheckInput (object):
                             self._player._screen._hub = "Default"
                             selected = None
                     self._player._screen.makeHub(selected)
-                else if self._buttonState == "Walk":
+                elif self._buttonState == "Walk":
                     self._buttonState = None 
-
             if mouse.x >= WINDOW_WIDTH:
-
+                pass
 
 
         if key == 'q':

@@ -37,7 +37,7 @@ class NPC (Character):
             words = Text(self._sprite.p1, knowledge)
 
     def sell(self):
-            
+        pass
 
     def heal(self,character):
         pass
