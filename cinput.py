@@ -21,7 +21,11 @@ class CheckInput (object):
                         yLeft = thing._sprite.p1.y
                     if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
                             if isinstance(thing, Zombie):
-                                self._player._screen._hub = "Zombie"
+                                if thing._status == "gravestone":
+                                    thing.wakeUp()
+                                    self._player._screen._hub = "Gravestone"
+                                else:
+                                    self._player._screen._hub = "Zombie"
                             elif isinstance(thing, NPC):
                                 self._player._screen._hub = "NPC"
                             break

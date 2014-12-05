@@ -11,8 +11,6 @@ class Player (Character):
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._healthBar = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
 
-
-
     def is_player (self):
         return True
 

@@ -58,9 +58,9 @@ class Screen (object):
             self.makeButton("Follow", 2, part)
             self.makeButton("Group", 3, part)
             self.makeButton("Mode", 4, part)
-
-
-
+        if self._hub == "Gravestone":
+            part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
+            self.makeButton("Wake Up", 0, part)
             
         if self._hub == "NPC":
             pass
