@@ -7,7 +7,7 @@ import time
 # that behavior. (Which is right now unfortunately not implemented.)
 #
 class NPC (Character):
-    def __init__ (self,name,desc, health):
+    def __init__ (self,name,desc, health, knowledge, items, prices):
         Character.__init__(self,name,desc, health)
         log("NPC.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
@@ -27,17 +27,17 @@ class NPC (Character):
     # this gets called from event queue when the time is right
 
     def event (self,q):
-        direc = random.randint(0,3)
-        if direc == 0:
-            self.walk(1,0)
-        if direc == 1:
-            self.walk(-1,0)
-        if direc == 2:
-            self.walk(0,-1)
-        if direc == 3:
-            self.walk(0,1)
-        #words.undraw()
-        self.attack()
         log("event for "+str(self))
         self.register(q,self._freq)
         
+    def talk(self):
+        if isinstance(self._sprite, Image):
+            words = Text(self._sprite.anchor, knowledge)
+        else:
+            words = Text(self._sprite.p1, knowledge)
+
+    def sell(self):
+            
+
+    def heal(self,character):
+        pass

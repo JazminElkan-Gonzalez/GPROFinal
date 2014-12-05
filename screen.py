@@ -47,23 +47,24 @@ class Screen (object):
         button.draw(self._window)
         buttonText.draw(self._window)
 
-    def makeHub(self):
+    def makeHub(self, selected):
+        part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
         if self._hub == "Default":
-            # undraw stuff
-            pass
+            for button in  self._buttons:
+                button.undraw()
         if self._hub == "Zombie":
-            part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
-            self.makeButton("Walk", 0, part)
-            self.makeButton("Attack", 1, part)
-            self.makeButton("Follow", 2, part)
-            self.makeButton("Group", 3, part)
-            self.makeButton("Mode", 4, part)
-
-
-
-            
+            if selected._status == "friend":
+                self.makeButton("Walk", 0, part)
+                self.makeButton("Attack", 1, part)
+                self.makeButton("Follow", 2, part)
+                self.makeButton("Group", 3, part)
+                self.makeButton("Mode", 4, part)
+            if selected._status == "gravestone":
+                self.makeButton("Rise Up", 0, part)
         if self._hub == "NPC":
-            pass
+                self.makeButton("Talk", 0, part)
+                self.makeButton("Buy", 0, part)
+                self.makeButton("Heal", 0, part)
 
     def addText(self,text):
         self._texts.append((text,0))
