@@ -38,8 +38,6 @@ class Rat (Character):
             self.walk(0,-1)
         if direc == 3:
             self.walk(0,1)
-        #words.undraw()
-        self.attack()
         log("event for "+str(self))
         self.register(q,self._freq)
         

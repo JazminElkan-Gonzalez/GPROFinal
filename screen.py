@@ -32,6 +32,7 @@ class Screen (object):
         self._hub = "Default"
         self.init_move(cy,  cx)
         self._buttons = []
+        self._bText = []
 
     def makeButton(self, text, pos, part):
         start = 2*TILE_SIZE
@@ -42,7 +43,7 @@ class Screen (object):
         button =  Rectangle(Point(xLeft,start+((3*pos+1)*part)),Point(xRight,start+(3*pos+3)*part))
         buttonText = Text(Point(xMid, start+(3*pos+2)*part), text)
         self._buttons.append(button)
-        self._buttons.append(buttonText)
+        self._bText.append(buttonText)
         button.setFill("darkgrey")
         button.draw(self._window)
         buttonText.draw(self._window)
@@ -50,21 +51,30 @@ class Screen (object):
     def makeHub(self, selected):
         part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
         if self._hub == "Default":
-            for button in  self._buttons:
-                button.undraw()
-        if self._hub == "Zombie":
-            if selected._status == "friend":
-                self.makeButton("Walk", 0, part)
-                self.makeButton("Attack", 1, part)
-                self.makeButton("Follow", 2, part)
-                self.makeButton("Group", 3, part)
-                self.makeButton("Mode", 4, part)
-            if selected._status == "gravestone":
-                self.makeButton("Rise Up", 0, part)
+            for i in range(len(self._buttons)):
+                self._buttons[i].undraw()
+                self._bText[i].undraw()
+            self._buttons = []
+            self._bText = []
+
+        if self._hub == "Friend":
+            self._buttons = []
+            self._bText = []
+            self.makeButton("Walk", 0, part)
+            self.makeButton("Attack", 1, part)
+            self.makeButton("Follow", 2, part)
+            self.makeButton("Group", 3, part)
+            self.makeButton("Mode", 4, part)
+        if self._hub == "Gravestone":
+            self._buttons = []
+            self._bText = []
+            self.makeButton("Rise Up", 0, part)
         if self._hub == "NPC":
-                self.makeButton("Talk", 0, part)
-                self.makeButton("Buy", 0, part)
-                self.makeButton("Heal", 0, part)
+            self._buttons = []
+            self._bText = []
+            self.makeButton("Talk", 0, part)
+            self.makeButton("Buy", 0, part)
+            self.makeButton("Heal", 0, part)
 
     def addText(self,text):
         self._texts.append((text,0))

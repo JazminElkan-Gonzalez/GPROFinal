@@ -51,7 +51,8 @@ MOVE = {
     'Down' : (0,1)
 }
 
-
+ZOMBIEBUTT = ["Walk", "Attack", "Follow", "Group", "Mode"]
+NPCBUTT = ["Talk", "Buy", "Heal"]
 
 #
 # Create the right-side panel that can be used to display interesting

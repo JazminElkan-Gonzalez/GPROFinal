@@ -7,6 +7,100 @@ class CheckInput (object):
         self._player = player
         self._window = window
         self._buttonState = None
+        self._selected = None
+
+    def firstClick(self, mouse):
+        for i in range(len(OBJECTS)):
+            if isinstance(OBJECTS[i]._sprite, Image):
+                xLeft = OBJECTS[i]._sprite.getAnchor().x - TILE_SIZE/2
+                yLeft = OBJECTS[i]._sprite.getAnchor().y - TILE_SIZE/2
+            else:
+                xLeft = OBJECTS[i]._sprite.p1.x
+                yLeft = OBJECTS[i]._sprite.p1.y
+            if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
+                self._selected = OBJECTS[i]
+                if isinstance(OBJECTS[i], Rat):
+                    self._player._screen._hub = "Default"
+                elif isinstance(OBJECTS[i], Zombie):
+                    if OBJECTS[i]._status == "gravestone":
+                        self._player._screen._hub = "Gravestone"
+                    if OBJECTS[i]._status == "friend":
+                        self._player._screen._hub = "Friend"
+                elif isinstance(OBJECTS[i], NPC):
+                    self._player._screen._hub = "NPC"
+                break
+            elif i == len(OBJECTS) -1:
+                self._player._screen._hub = "Default"
+                self._selected = None
+        self._player._screen.makeHub(self._selected)
+
+    def buttonPress(self, mouse):
+        part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
+        xLeft = WINDOW_WIDTH+TILE_SIZE
+        xRight = WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE
+        for i in range(len(self._player._screen._buttons)):
+            yLeft = self._player._screen._buttons[i].p1.y
+            if mouse.x > xLeft and mouse.x < xRight and mouse.y > yLeft and mouse.y < yLeft + 2*part:
+                if self._player._screen._hub == "Friend":
+                    if i == 4: #mode
+                        self._player._screen._hub = "Default"
+                        self._selected = None
+                        self._player._screen.makeHub(self._selected)
+                    if i == 2: #follow
+                        self._player._screen._hub = "Default"
+                        self._selected = None
+                        self._player._screen.makeHub(self._selected)
+                    else:
+                        self._buttonState == ZOMBIEBUTT[i]
+                elif self._player._screen._hub == "NPC":
+                    if i == 0: #talk
+                        self._player._screen._hub = "Default"
+                        self._selected = None
+                        self._player._screen.makeHub(self._selected)
+                    else:
+                        self._buttonState == NPCBUTT[i]
+                elif self._player._screen._hub == "Gravestone":
+                    self._selected.wakeUp()
+                    self._player._screen._hub = "Default"
+                    self._selected = None
+                    self._player._screen.makeHub(self._selected)
+
+    def thirdClick(self, mouse):
+        if self._buttonState == "Walk":
+            self._selected._movement == "walkTowards"
+            self._selected._walkToX = mouse.x
+            self._selected._walkToY = mouse.y
+        elif self._buttonState == "Follow":
+            self._selected._movement == "follow"
+        elif self._buttonState == "Attack":
+            self._selected._movement == "attack"
+            for i in range(len(OBJECTS)):
+                if isinstance(OBJECTS[i]._sprite, Image):
+                    xLeft = OBJECTS[i]._sprite.getAnchor().x - TILE_SIZE/2
+                    yLeft = OBJECTS[i]._sprite.getAnchor().y - TILE_SIZE/2
+                else:
+                    xLeft = OBJECTS[i]._sprite.p1.x
+                    yLeft = OBJECTS[i]._sprite.p1.y
+                if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
+                    self._selected._attackObject == OBJECTS[i]
+        elif self._buttonState == "Group":
+            pass
+        elif self._buttonState == "Buy":
+            pass
+        elif self._buttonState == "Heal":
+            pass
+
+
+
+
+
+
+        else:
+            pass
+        self._buttonState == None
+        self._selected == None
+        self._player._screen._hub = "Default"
+        self._player._screen.makeHub(self._selected)
 
     def event (self,q):
         key = self._window.checkKey()
@@ -14,37 +108,15 @@ class CheckInput (object):
         if mouse != None:
             if mouse.x < WINDOW_WIDTH:
                 if self._buttonState == None:
-                    for i in range(len(OBJECTS)):
-                        if isinstance(OBJECTS[i]._sprite, Image):
-                            xLeft = OBJECTS[i]._sprite.getAnchor().x - TILE_SIZE/2
-                            yLeft = OBJECTS[i]._sprite.getAnchor().y - TILE_SIZE/2
-                        else:
-                            xLeft = OBJECTS[i]._sprite.p1.x
-                            yLeft = OBJECTS[i]._sprite.p1.y
-                        if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
-                            selected = OBJECTS[i]
-                            if isinstance(OBJECTS[i], Rat):
-                                self._player._screen._hub = "Default"
-                            elif isinstance(OBJECTS[i], Zombie):
-                                self._player._screen._hub = "Zombie"
-                            elif isinstance(OBJECTS[i], NPC):
-                                self._player._screen._hub = "NPC"
-                            break
-                        elif i == len(OBJECTS) -1:
-                            self._player._screen._hub = "Default"
-                            selected = None
-                    self._player._screen.makeHub(selected)
-                elif self._buttonState == "Walk":
-                    self._buttonState = None 
+                    self.firstClick(mouse)
+                else:
+                    self.thirdClick(mouse)
             if mouse.x >= WINDOW_WIDTH:
-                pass
-
-
+                self.buttonPress(mouse)
         if key == 'q':
             self._window.close()
             exit(0)
         if key in MOVE:
             (dx,dy) = MOVE[key]
             self._player.move(dx,dy)
-
         q.enqueue(1,self)
