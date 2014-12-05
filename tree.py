@@ -15,6 +15,5 @@ class Tree (Thing):
         self._x = x
         self._y = y
 
-   
     def is_walkable (self):
         return False
