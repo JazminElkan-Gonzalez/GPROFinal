@@ -2,6 +2,7 @@ from util import *
 from character import *
 from npc import *
 from player import *
+from hoard import *
 
 # A Rat is an example of a character which defines an event that makes
 # the rat move, so that it can be queued into the event queue to enable
@@ -48,6 +49,16 @@ class Zombie (Character):
             self._health = self._origHealth
         if self._status == "friend":
             pass
+
+    def combine(self,partner):
+        if isinstance(partner, Zombie):
+            Hoard("HOARD", "A hoard of zombies! It's loyal to you.",[self,partner])
+        elif isinstance(partner, Hoard):
+            partner.addZombie(self)
+            # self._hoard = partner
+        else:
+            print "You can't make a hoard with that!"
+
 
     def followPlayer(self):
         return self.walkTo(self.player._x, self.player._y)
