@@ -49,11 +49,15 @@ class Thing (Root):
                 self._sprite.undraw()        
 
     def updateHealth(self, amount):
-        self._health = health + amount
+        self._health = self._health + amount
         words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
+        if self._health == 0:
+            self.die()
 
+    def die(self):
+        print self._name, "is dead and should be killed better"
 
     # return the sprite for display purposes
     def sprite (self):

@@ -45,6 +45,7 @@ def main ():
     Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
 
     Zombie("ZOMZOM", "ZOOM ZOOM", 50).register(q,100).materialize(scr,28,23)
+    Zombie("brains", "A ZOMBIE WHO LIKES BRAINSSSSS", 50).register(q,100).materialize(scr,28,22)
 
     create_panel(window)
 
