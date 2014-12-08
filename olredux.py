@@ -7,6 +7,7 @@ from rat import *
 from player import *
 from cinput import *
 from zombie import *
+from npc import *
 ############################################################
 #
 # Olinland Redux
@@ -43,6 +44,7 @@ def main ():
 
     # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
     Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
+    NPC("Bub","Blacksmith", 5, "There are Zombies out there!!!", [], []).register(q,400).materialize(scr,25,25)
 
     Zombie("ZOMZOM", "ZOOM ZOOM", 50).register(q,100).materialize(scr,28,23)
     Zombie("brains", "A ZOMBIE WHO LIKES BRAINSSSSS", 50).register(q,100).materialize(scr,28,22)

@@ -56,7 +56,6 @@ class Screen (object):
                 self._bText[i].undraw()
             self._buttons = []
             self._bText = []
-
         if self._hub == "Friend":
             self._buttons = []
             self._bText = []
@@ -73,8 +72,8 @@ class Screen (object):
             self._buttons = []
             self._bText = []
             self.makeButton("Talk", 0, part)
-            self.makeButton("Buy", 0, part)
-            self.makeButton("Heal", 0, part)
+            self.makeButton("Buy", 1, part)
+            self.makeButton("Heal", 2, part)
 
     def addText(self,text):
         self._texts.append((text,0))
