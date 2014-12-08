@@ -126,16 +126,14 @@ class Zombie (Character):
     def attack(self):
         if self._status == "gravestone":
             pass
-        # elif self._status == "enemy":
         else:
-            # positions = [(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1)]
             for thing in OBJECTS:
                 if thing != self:
                     if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1):
                     # for adj in positions:
                     #     if (thing._x == self._x + adj[0] and thing._y == self._y + adj[1]):
                     # if (thing._x == self._x and thing._y == self._y -1) or (thing._x == self._x and thing._y == self._y + 1) or  (thing._x == self._x + 1 and thing._y == self._y) or  (thing._x == self._x - 1 and thing._y == self._y) or (thing._x == self._x and thing._y == self._y):
-                        if not ((thing == self.player or thing._status == "friend") and self._status == "friend"):
+                        if not ((thing == self.player or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #fix that one attacks more than the other
 
