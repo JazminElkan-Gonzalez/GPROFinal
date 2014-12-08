@@ -19,7 +19,7 @@ WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
 
 # Pixel size of the panel on the right where you can display stuff
 WINDOW_RIGHTPANEL = 200
-
+WINDOW_LEFTPANEL = 200
 
 #############################################################
 # 
@@ -59,8 +59,11 @@ NPCBUTT = ["Talk", "Buy", "Heal"]
 # information to the player
 #
 def create_panel (window):
-    fg = Rectangle(Point(WINDOW_WIDTH+1,-20),
-                   Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL+20,WINDOW_HEIGHT+20))
+    fg = Rectangle(Point(WINDOW_WIDTH+1,-20), Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL+20,WINDOW_HEIGHT+20))
+    fg.setFill("lightgray")
+    fg.setOutline("lightgray")
+    fg.draw(window)
+    fg = Rectangle(Point(-20,WINDOW_HEIGHT + 1), Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL+20,WINDOW_HEIGHT+WINDOW_LEFTPANEL+20))
     fg.setFill("lightgray")
     fg.setOutline("lightgray")
     fg.draw(window)

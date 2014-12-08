@@ -29,7 +29,7 @@ from npc import *
 def main ():
 
     window = GraphWin("Olinland Redux", 
-                      WINDOW_WIDTH+WINDOW_RIGHTPANEL, WINDOW_HEIGHT,
+                      WINDOW_WIDTH+WINDOW_RIGHTPANEL, WINDOW_HEIGHT+WINDOW_LEFTPANEL,
                       autoflush=False)
 
     level = Level()

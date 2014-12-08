@@ -50,27 +50,20 @@ class Screen (object):
 
     def makeHub(self, selected):
         part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
-        if self._hub == "Default":
-            for i in range(len(self._buttons)):
-                self._buttons[i].undraw()
-                self._bText[i].undraw()
-            self._buttons = []
-            self._bText = []
+        for i in range(len(self._buttons)):
+            self._buttons[i].undraw()
+            self._bText[i].undraw()
+        self._buttons = []
+        self._bText = []  
         if self._hub == "Friend":
-            self._buttons = []
-            self._bText = []
             self.makeButton("Walk", 0, part)
             self.makeButton("Attack", 1, part)
             self.makeButton("Follow", 2, part)
             self.makeButton("Group", 3, part)
             self.makeButton("Mode", 4, part)
         if self._hub == "Gravestone":
-            self._buttons = []
-            self._bText = []
             self.makeButton("Rise Up", 0, part)
         if self._hub == "NPC":
-            self._buttons = []
-            self._bText = []
             self.makeButton("Talk", 0, part)
             self.makeButton("Buy", 1, part)
             self.makeButton("Heal", 2, part)

@@ -11,15 +11,17 @@ class NPC (Character):
         rect.setOutline("blue")
         self._sprite = rect
         self._direction = random.randrange(4)
+        self._knowledge = knowledge
 
     def event (self,q):
         log("event for "+str(self))
         self.register(q,self._freq)
         
     def talk(self):
-        words = Text(self._sprite.anchor, knowledge)
+        words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH-20), self._name + self._knowledge)
         words.draw(self._screen._window)
         self._screen.addText(words)
+
 
     def sell(self):
         pass

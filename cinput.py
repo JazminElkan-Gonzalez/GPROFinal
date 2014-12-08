@@ -60,6 +60,7 @@ class CheckInput (object):
                 elif self._player._screen._hub == "NPC":
                     if i == 0: #talk
                         self._player._screen._hub = "Default"
+                        self._selected.talk()
                         self._selected = None
                         self._player._screen.makeHub(self._selected)
                     else:
