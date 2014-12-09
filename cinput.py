@@ -88,14 +88,14 @@ class CheckInput (object):
 
     def thirdClick(self, mouse):
         if self._buttonState == "Walk":
-            self._selected._movement == "walkTowards"
+            self._selected._movement = "walkTowards"
             print self._buttonState
             self._selected._walkToX = mouse.x
             self._selected._walkToY = mouse.y
         elif self._buttonState == "Follow":
-            self._selected._movement == "follow"
+            self._selected._movement = "follow"
         elif self._buttonState == "Attack":
-            self._selected._movement == "attack"
+            self._selected._movement = "attack"
             setAttack(self.findObject(mouse))
         elif self._buttonState == "Group":
             pass
