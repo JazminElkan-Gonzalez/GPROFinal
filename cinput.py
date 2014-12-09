@@ -32,7 +32,12 @@ class CheckInput (object):
                 if found._status == "friend":
                     self._player._screen._hub = "Friend"
             elif isinstance(found, NPC):
-                self._player._screen._hub = "NPC"
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
+                    self._player._screen._hub = "NPC"
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
         else:
             self._player._screen._hub = "Default"
             self._selected = None
@@ -55,7 +60,7 @@ class CheckInput (object):
                         self._selected = None
                         self._player._screen.makeHub(self._selected)
                     else:
-                        self._buttonState == ZOMBIEBUTT[i]
+                        self._buttonState = ZOMBIEBUTT[i]
                     break
                 elif self._player._screen._hub == "NPC":
                     if i == 0: #talk
@@ -84,6 +89,7 @@ class CheckInput (object):
     def thirdClick(self, mouse):
         if self._buttonState == "Walk":
             self._selected._movement == "walkTowards"
+            print self._buttonState
             self._selected._walkToX = mouse.x
             self._selected._walkToY = mouse.y
         elif self._buttonState == "Follow":

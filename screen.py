@@ -71,7 +71,7 @@ class Screen (object):
             self._dExtra.append(words)
             self._dialogue = "talk"
         elif status == "sell":
-            words = Text(Point(60,WINDOW_HEIGHT+60), "yes, what would you like to buy?")
+            words = Text(Point(200,WINDOW_HEIGHT+60), "yes, what would you like to buy?")
             words.draw(self._window)
             self._dExtra.append(words)
             self._dialogue = "sell"

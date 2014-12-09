@@ -36,6 +36,7 @@ class Zombie (Character):
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
+            self.die()
         else:
             words = Text(self._sprite.p1, "GRR")
             words.draw(self._screen._window)
