@@ -101,8 +101,8 @@ class CheckInput (object):
             pass
         else:
             pass
-        self._buttonState == None
-        self._selected == None
+        self._buttonState = None
+        self._selected = None
         self._player._screen._hub = "Default"
         self._player._screen.makeHub(self._selected)
 
