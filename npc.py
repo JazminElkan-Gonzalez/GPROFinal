@@ -1,5 +1,6 @@
 from character import *
 import time
+from screen import *
 
 class NPC (Character):
     def __init__ (self,name,desc, health, knowledge, items, prices):
@@ -12,19 +13,20 @@ class NPC (Character):
         self._sprite = rect
         self._direction = random.randrange(4)
         self._knowledge = knowledge
+        self._items = items
+        self._prices = prices
 
     def event (self,q):
         log("event for "+str(self))
         self.register(q,self._freq)
         
     def talk(self):
-        words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH-20), self._name + self._knowledge)
-        words.draw(self._screen._window)
-        self._screen.addText(words)
-
+        self._screen.makeDialogue("talk", self._name, self._knowledge, self._items, self._prices)
 
     def sell(self):
-        pass
+        self._screen.makeDialogue("sell", self._name, self._knowledge, self._items, self._prices)
 
-    def heal(self,character):
-        pass
+
+    def heal(self):
+        self._screen.makeDialogue("heal", self._name, self._knowledge, self._items, self._prices)
+

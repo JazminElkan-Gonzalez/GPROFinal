@@ -21,7 +21,6 @@ class Screen (object):
         self._window = window
         self._cx = cx    # the initial center tile position 
         self._cy = cy    #  of the screen
-        self._things = []
         self._texts = []
         # Background is black
         bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
@@ -30,9 +29,12 @@ class Screen (object):
         bg.draw(window)
         self._current = []
         self._hub = "Default"
+        self._dialogue = "talk"
         self.init_move(cy,  cx)
         self._buttons = []
         self._bText = []
+        self._dButtons = []
+        self._dExtra = []
 
     def makeButton(self, text, pos, part):
         start = 2*TILE_SIZE
@@ -47,6 +49,39 @@ class Screen (object):
         button.setFill("darkgrey")
         button.draw(self._window)
         buttonText.draw(self._window)
+
+    def makeDialogue(self, status, name, knowledge, items, prices):
+        name = Text(Point(60,WINDOW_HEIGHT+37), name + " says:")
+        bubble = Rectangle(Point(20, WINDOW_HEIGHT + 20), Point(WINDOW_HEIGHT-20, WINDOW_WIDTH+180))
+        ok = Rectangle(Point(WINDOW_HEIGHT-120, WINDOW_WIDTH+130), Point(WINDOW_HEIGHT-30, WINDOW_WIDTH+170))
+        accept = Text(Point(WINDOW_HEIGHT-75, WINDOW_WIDTH+150), "OK")
+        bubble.setFill("grey")
+        ok.setFill("darkgrey")
+        bubble.draw(self._window)
+        ok.draw(self._window)
+        accept.draw(self._window)
+        name.draw(self._window)
+        self._dExtra.append(bubble)
+        self._dButtons.append(ok)
+        self._dExtra.append(accept)
+        self._dExtra.append(name)
+        if status == "talk":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "talk"
+        elif status == "sell":
+            words = Text(Point(60,WINDOW_HEIGHT+60), "yes, what would you like to buy?")
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "sell"
+        elif status == "heal":
+            words = Text(Point(200,WINDOW_HEIGHT+60), "Well, nothing comes free you know...")
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "heal"
+
+
 
     def makeHub(self, selected):
         part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16

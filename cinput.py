@@ -63,8 +63,16 @@ class CheckInput (object):
                         self._selected.talk()
                         self._selected = None
                         self._player._screen.makeHub(self._selected)
-                    else:
-                        self._buttonState == NPCBUTT[i]
+                    if i == 1: #sell this is going to be changed
+                        self._player._screen._hub = "Default"
+                        self._selected.sell()
+                        self._selected = None
+                        self._player._screen.makeHub(self._selected)
+                    if i == 2: #heal
+                        self._player._screen._hub = "Default"
+                        self._selected.heal()
+                        self._selected = None
+                        self._player._screen.makeHub(self._selected)
                     break
                 elif self._player._screen._hub == "Gravestone":
                     self._selected.wakeUp()
@@ -85,10 +93,6 @@ class CheckInput (object):
             setAttack(self.findObject(mouse))
         elif self._buttonState == "Group":
             pass
-        elif self._buttonState == "Buy":
-            pass
-        elif self._buttonState == "Heal":
-            pass
         else:
             pass
         self._buttonState == None
@@ -96,17 +100,38 @@ class CheckInput (object):
         self._player._screen._hub = "Default"
         self._player._screen.makeHub(self._selected)
 
+    def textClick(self,mouse):
+        for i in range(len(self._player._screen._dButtons)):
+            yLeft = self._player._screen._dButtons[i].p1.y
+            xLeft = self._player._screen._dButtons[i].p1.x
+            yRight = self._player._screen._dButtons[i].p2.y
+            xRight = self._player._screen._dButtons[i].p2.x
+            if mouse.x > xLeft and mouse.x < xRight and mouse.y > yLeft and mouse.y < yRight:
+                if mouse.x >= WINDOW_HEIGHT-120:
+                    if self._player._screen._dialogue == "heal":
+                        self._player.updateHealth(self._player._maxHealth - self._player._health)
+                    for item in self._player._screen._dButtons:
+                        item.undraw()
+                    for item in self._player._screen._dExtra:
+                        item.undraw()
+                    self._player._screen._dButtons = []
+                    self._player._screen._dExtra = []
+                break
+
+
     def event (self,q):
         key = self._window.checkKey()
         mouse = self._window.checkMouse()
         if mouse != None:
-            if mouse.x < WINDOW_WIDTH:
+            if mouse.x < WINDOW_WIDTH and mouse.y < WINDOW_HEIGHT:
                 if self._buttonState == None:
                     self.firstClick(mouse)
                 else:
                     self.thirdClick(mouse)
             if mouse.x >= WINDOW_WIDTH:
                 self.buttonPress(mouse)
+            if mouse.y >= WINDOW_HEIGHT:
+                self.textClick(mouse)
         if key == 'q':
             self._window.close()
             exit(0)
