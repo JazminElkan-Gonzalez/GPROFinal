@@ -16,7 +16,11 @@ class Zombie (Character):
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("grey")
         rect.setOutline("black")
-        self._sprite = rect
+
+        pic = 'zombie.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+
+        # self._sprite = rect
         self._power = 5
         self._origHealth = health
 
@@ -31,11 +35,12 @@ class Zombie (Character):
     def wakeUp(self):
         if self._status == "gravestone":
             self._status = "enemy"
-            self._sprite.setFill("darkgreen")
-            self._sprite.setOutline("red")
+            # self._sprite.setFill("darkgreen")
+            # self._sprite.setOutline("red")
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
+            self.die()  #temporary to test friend functionality
         else:
             words = Text(self._sprite.p1, "GRR")
             words.draw(self._screen._window)
@@ -45,7 +50,7 @@ class Zombie (Character):
         if self._status == "enemy":
             self._status = "friend"
             self._movement = "follow"
-            self._sprite.setOutline("green")
+            # self._sprite.setOutline("green")
             self._health = self._origHealth
         if self._status == "friend":
             pass
@@ -146,5 +151,8 @@ class Zombie (Character):
                     # if (thing._x == self._x and thing._y == self._y -1) or (thing._x == self._x and thing._y == self._y + 1) or  (thing._x == self._x + 1 and thing._y == self._y) or  (thing._x == self._x - 1 and thing._y == self._y) or (thing._x == self._x and thing._y == self._y):
                         if not ((thing == self.player or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
-                                #fix that one attacks more than the other
+                                #TODO: fix that one attacks more than the other
+                                #TODO: fix that friendly zombies randomly attack NPCs
+
+
 
