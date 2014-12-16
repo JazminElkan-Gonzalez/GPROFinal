@@ -40,18 +40,21 @@ class Thing (Root):
                 self._sprite.undraw()        
 
     def updateHealth(self, amount):
-        self._health = self._health + amount
-        if isinstance(self._sprite, Image):
-            words = Text(self._sprite.anchor, "SQUEE")
-        else:
-            words = Text(self._sprite.p1, "SQUEE")
-        # words = Text(self._sprite.p1, "SQUEE")
-        words.draw(self._screen._window)
-        self._screen.addText(words)
-        if self._health <= 0:
-            self.die()
+        if self._health > 0:
+            print self._name,  "lost health: ", self._health
+            self._health = self._health + amount
+            if isinstance(self._sprite, Image):
+                words = Text(self._sprite.anchor, "SQUEE")
+            else:
+                words = Text(self._sprite.p1, "SQUEE")
+            # words = Text(self._sprite.p1, "SQUEE")
+            words.draw(self._screen._window)
+            self._screen.addText(words)
+            if self._health <= 0:
+                self.die()
 
     def die(self):
+        self._dead = True
         OBJECTS.remove(self)
         self._sprite.undraw()
         print self._name + "has died"
