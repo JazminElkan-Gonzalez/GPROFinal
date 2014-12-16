@@ -101,12 +101,13 @@ class CheckInput (object):
                     self._player._screen.makeHub(self._selected)
                     break
 
+    def clickPos(self, mouse):
+            return mouse.x/TILE_SIZE-10+self._player._x, mouse.y/TILE_SIZE-10+self._player._y
+
     def thirdClick(self, mouse):
         if self._buttonState == "Walk":
-            self._selected._movement = "walkTowards"
-            print self._buttonState
-            self._selected._walkToX = mouse.x
-            self._selected._walkToY = mouse.y
+            self._selected._movement = "walkTo"
+            self._selected._walkToX, self._selected._walkToY = self.clickPos(mouse)
         elif self._buttonState == "Attack":
             self._selected._movement = "attack"
             self._selected.setAttack(self.findObject(mouse, OBJECTS))

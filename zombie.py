@@ -117,7 +117,6 @@ class Zombie (Character):
         self._movement = "attack"
 
     def updateHealth(self, amount):
-        print self._name, "'s health: ", self._health
         if self._status == "gravestone":
             return
         self._health = self._health + amount
@@ -150,6 +149,8 @@ class Zombie (Character):
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
                 newX, newY = self.walkTo(self._attackObject._x, self._attackObject._y)
+            if self._movement == "walkTo":
+                newX, newY = self.walkTo(self._walkToX, self._walkToY)
 
             for i in range(len(OBJECTS)):
                 if OBJECTS[i]._x == self._x + newX and OBJECTS[i]._y == self._y + newY:
