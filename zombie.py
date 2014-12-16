@@ -33,8 +33,9 @@ class Zombie (Character):
     def wakeUp(self):
         if self._status == "gravestone":
             self._status = "enemy"
-            # self._sprite.setFill("darkgreen")
-            # self._sprite.setOutline("red")
+            if isinstance(self._sprite, Rectangle):
+                self._sprite.setFill("darkgreen")
+                self._sprite.setOutline("red")
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
@@ -48,7 +49,8 @@ class Zombie (Character):
         if self._status == "enemy":
             self._status = "friend"
             self._movement = "follow"
-            # self._sprite.setOutline("green")
+            if isinstance(self._sprite, Rectangle):
+                self._sprite.setOutline("green")
             self._health = self._origHealth
         # elif self._status == "friend":
         #     self.die()
@@ -78,7 +80,8 @@ class Zombie (Character):
             self.addZombieStats(partner)
             self._freq = 7*len(self._zombies)+100
             
-            self._sprite.setOutline("yellow")
+            if isinstance(self._sprite, Rectangle):
+                self._sprite.setOutline("yellow")
             
             partner._status = "hoard"
             partner._power = 0
