@@ -13,7 +13,7 @@ class Feather  (Thing):
         self._user = None
         self._price = 10
 
-    def use(self, user):
+    def use(self):
         self._health = self._health - 1
         if self._health <= 0:
             self.die()

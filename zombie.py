@@ -3,11 +3,6 @@ from character import *
 from npc import *
 from player import *
 
-
-# A Rat is an example of a character which defines an event that makes
-# the rat move, so that it can be queued into the event queue to enable
-# that behavior. (Which is right now unfortunately not implemented.)
-#
 class Zombie (Character):
     def __init__ (self,name,desc,health):
         Character.__init__(self,name,desc,health, [])
@@ -123,7 +118,10 @@ class Zombie (Character):
         if self._status == "gravestone":
             return
         self._health = self._health + amount
-        words = Text(self._sprite.p1, "SQUEE")
+        if isinstance(self._sprite, Image):
+            words = Text(self._sprite.anchor, "SQUEE")
+        else:
+            words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
         if self._health == 0:

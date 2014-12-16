@@ -1,15 +1,7 @@
 from root import *
 from graphics import *
 from util import *
-# A thing is something that can be interacted with and by default
-# is not moveable or walkable over
-#
-#   Thing(name,description)
-#
-# A thing defines a default sprite in field _sprite
-# To create a new kind of thing, subclass Thing and 
-# assign it a specific sprite (see the OlinStatue below).
-# 
+
 class Thing (Root):
     def __init__ (self,name,desc, health):
         self._name = name
@@ -35,7 +27,7 @@ class Thing (Root):
             self._x = nx
             self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
             self.antiDraw()
-            # print "same: ", isinstance(self._sprite, Image)
+
 
     def antiDraw(self):
         if isinstance(self._sprite, Image):

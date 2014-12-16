@@ -33,6 +33,8 @@ class Level (object):
             map[random.randrange(size)] = 1
         for i in range(50):
             map[random.randrange(size)] = 2
+        for i in range(50):
+            map[random.randrange(size)] = 3
         self._map = map
 
     def _pos (self,x,y):
