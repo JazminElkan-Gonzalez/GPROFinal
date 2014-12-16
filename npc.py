@@ -4,7 +4,7 @@ from screen import *
 
 class NPC (Character):
     def __init__ (self,name,desc, health, knowledge, items, prices):
-        Character.__init__(self,name,desc, health)
+        Character.__init__(self,name,desc, health, items, prices)
         log("NPC.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
@@ -13,8 +13,8 @@ class NPC (Character):
         self._sprite = rect
         self._direction = random.randrange(4)
         self._knowledge = knowledge
-        self._items = items
-        self._prices = prices
+        
+
 
     def event (self,q):
         log("event for "+str(self))

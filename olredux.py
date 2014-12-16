@@ -8,6 +8,7 @@ from player import *
 from cinput import *
 from zombie import *
 from npc import *
+from feather import *
 ############################################################
 #
 # Olinland Redux
@@ -44,14 +45,15 @@ def main ():
 
     # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
     Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
-    NPC("Bub","Blacksmith", 5, "There are Zombies out there!!!", [], []).register(q,400).materialize(scr,25,25)
-
+    Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,26,26)
+    fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)
+    NPC("Bub","Blacksmith", 5, "There are Zombies out there!!!", [fluf], [10]).register(q,400).materialize(scr,25,25)
     Zombie("ZOMZOM", "ZOOM ZOOM", 50).register(q,100).materialize(scr,28,23)
     Zombie("brains", "A ZOMBIE WHO LIKES BRAINSSSSS", 50).register(q,100).materialize(scr,28,22)
 
     create_panel(window)
 
-    p = Player(30, "...what's your name, bub?...").materialize(scr,25,25)
+    p = Player(30, "...what's your name, bub?...", [], [], 10).materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
     q.enqueue(1,scr)

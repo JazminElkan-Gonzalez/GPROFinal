@@ -16,7 +16,6 @@ class Thing (Root):
         self._description = desc
         self._health = health
         self._sprite = Text(Point(TILE_SIZE/2,TILE_SIZE/2),"?")
-        OBJECTS.append(self)
         log("Thing.__init__ for "+str(self))
 
     def __str__ (self):
@@ -57,7 +56,10 @@ class Thing (Root):
             self.die()
 
     def die(self):
-        print self._name, "is dead and should be killed better"
+        OBJECTS.remove(self)
+        self._sprite.undraw()
+        print self._name + "has died"
+
 
     # return the sprite for display purposes
     def sprite (self):
@@ -86,6 +88,7 @@ class Thing (Root):
     # call materialize, passing in the screen and the position
     # where you want it to appear
     def materialize (self,screen,x,y):
+        OBJECTS.append(self)
         screen.add(self,x,y)
         self._screen = screen
         self._x = x
