@@ -1,6 +1,7 @@
 from character import *
 import time
 from screen import *
+import random
 
 class NPC (Character):
     def __init__ (self,name,desc, health, knowledge, items):
@@ -11,6 +12,10 @@ class NPC (Character):
         rect.setFill("blue")
         rect.setOutline("blue")
         self._sprite = rect
+
+        pic = random.choice(['npc1.gif', 'npc2.gif', 'npc3.gif'])
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+
         self._direction = random.randrange(4)
         self._knowledge = knowledge
 

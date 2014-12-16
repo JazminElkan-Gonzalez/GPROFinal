@@ -15,6 +15,11 @@ class Rat (Character):
         rect.setFill("red")
         rect.setOutline("red")
         self._sprite = rect
+
+        # pic = random.choice(['npc1.gif', 'npc2.gif', 'npc3.gif'])
+        pic = 'rat.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+
         print "Type rat: ", type(rect)
         self._direction = random.randrange(4)
 

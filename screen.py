@@ -160,6 +160,14 @@ class Screen (object):
             elt.setFill('sienna')
             elt.setOutline('sienna')
 
+    def find_images(self,x,y):
+        if self.tile(x,y) == 0:
+            return 'lightGrass.gif'
+        if self.tile(x,y) == 1:
+            return 'grass.gif'
+        elif self.tile(x,y) == 2:
+            return 'tree.gif'
+
 
     def init_move(self, cy, cx):
         dx = (VIEWPORT_WIDTH-1)/2
@@ -168,6 +176,7 @@ class Screen (object):
             for x in range(LEVEL_WIDTH):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
+                # elt = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self.find_images(x,y))
                 elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                 self._current.append(elt)
                 self.find_colors(x,y, elt)
