@@ -2,6 +2,8 @@ from util import *
 from zombie import *
 from npc import *
 from rat import *
+from feather import *
+
 class CheckInput (object):
     def __init__ (self,window,player):
         self._player = player
@@ -38,6 +40,8 @@ class CheckInput (object):
                     words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
                     words.draw(self._player._screen._window)
                     self._player._screen.addText(words)
+            elif isinstance(found, Feather):
+                pass
         else:
             self._player._screen._hub = "Default"
             self._selected = None
@@ -137,8 +141,6 @@ class CheckInput (object):
                     rect.draw(self._window)
                     self._player._screen._dExtra.append(rect)
                     bought._user.sold(bought, self._player)
-
-
 
     def event (self,q):
         key = self._window.checkKey()
