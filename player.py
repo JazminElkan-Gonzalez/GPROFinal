@@ -4,13 +4,13 @@ from screen import *
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,health,name):
-        Character.__init__(self,name,"Yours truly", health)
+    def __init__ (self,health,name, items, prices, gold):
+        Character.__init__(self,name,"Yours truly", health, items, prices)
         log("Player.__init__ for "+str(self))
         pic = 't_android_red.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._healthBar = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
-
+        self._gold = gold
     def is_player (self):
         return True
 
@@ -71,6 +71,7 @@ class Player (Character):
 
 
     def materialize (self,screen,x,y):
+        OBJECTS.append(self)
         screen.add(self,x,y)
         self._screen = screen
         self._x = x

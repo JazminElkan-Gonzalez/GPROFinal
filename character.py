@@ -4,7 +4,7 @@ from thing import *
 # about possibly proactively
 #
 class Character (Thing):
-    def __init__ (self,name,desc, health):
+    def __init__ (self,name,desc, health, items, prices):
         Thing.__init__(self,name,desc, health)
         log("Character.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
@@ -12,6 +12,10 @@ class Character (Thing):
         rect.setFill("red")
         rect.setOutline("red")
         self._sprite = rect
+        self._items = items
+        self._prices = prices
+        for item in self._items:
+            item.pickup(self)
 
     # A character has a move() method that you should implement
     # to enable movement
