@@ -37,7 +37,7 @@ class Screen (object):
         buttonText.draw(self._window)
 
     def makeDialogue(self, status, name, knowledge, items):
-        name = Text(Point(100,WINDOW_HEIGHT+37), name + " says:")
+        name = Text(Point(100,WINDOW_HEIGHT+37), name.capitalize() + " says:")
         bubble = Rectangle(Point(20, WINDOW_HEIGHT + 20), Point(WINDOW_HEIGHT-20, WINDOW_WIDTH+180))
         ok = Rectangle(Point(WINDOW_HEIGHT-120, WINDOW_WIDTH+130), Point(WINDOW_HEIGHT-30, WINDOW_WIDTH+170))
         accept = Text(Point(WINDOW_HEIGHT-75, WINDOW_WIDTH+150), "OK")
@@ -58,15 +58,16 @@ class Screen (object):
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Health: " + str(items[0]._health))
             words.draw(self._window)
             self._dExtra.append(words)
-            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+120), "Type: " + items[0]._status)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+120), "Type: " + items[0]._status.capitalize())
             words.draw(self._window)
             self._dExtra.append(words)
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+140), "Strength: " + str(items[0]._power))
             words.draw(self._window)
             self._dExtra.append(words)
-            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+160), "Zombies Contained: " + str(len(items[0]._zombies)))
-            words.draw(self._window)
-            self._dExtra.append(words)
+            if len(items[0]._zombies) > 1:
+                words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+160), "Zombies Contained: " + str(len(items[0]._zombies)))
+                words.draw(self._window)
+                self._dExtra.append(words)
             self._dialogue = "talk"
         if status == "feather":
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80),  knowledge)
@@ -175,11 +176,13 @@ class Screen (object):
 
     def find_images(self,x,y):
         if self.tile(x,y) == 0:
-            return 'lightGrass.gif'
+            # return 'lightGrass.gif'
+            return 'lightGrassBrown.gif'
         elif self.tile(x,y) == 1:
             return 'grass.gif'
         elif self.tile(x,y) == 2:
-            return 'tree.gif'
+            # return 'tree.gif'
+            return 'treeBrown.gif'
         elif self.tile(x,y) == 3:
             return 'wall.gif'
 

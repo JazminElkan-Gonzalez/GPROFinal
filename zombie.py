@@ -83,6 +83,9 @@ class Zombie (Character):
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setOutline("yellow")
             
+            self._description = "A zombie hoard!!"
+            self._name = self._name + " the hoard leader"
+
             partner._status = "hoard"
             partner._power = 0
             partner.die()
