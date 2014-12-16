@@ -1,9 +1,6 @@
 from thing import *
 import math
 
-# Characters represent persons and animals and things that move
-# about possibly proactively
-#
 class Character (Thing):
     def __init__ (self,name,desc, health, items):
         Thing.__init__(self,name,desc, health)
@@ -19,10 +16,6 @@ class Character (Thing):
             yDef = WINDOW_HEIGHT + 100 + math.floor(i/10)*(TILE_SIZE+2)
             items[i].pickup(self)
             items[i]._sprite.move(xDef - items[i]._sprite.p1.x, yDef - items[i]._sprite.p1.y)
-
-    # A character has a move() method that you should implement
-    # to enable movement
-
 
     def addInventory(self, item):
         self._items.append(item)

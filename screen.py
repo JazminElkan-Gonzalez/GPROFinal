@@ -1,29 +1,14 @@
 from graphics import *
 from util import *
 import math
-#
-# A Screen is a representation of the level displayed in the 
-# viewport, with a representation for all the tiles and a 
-# representation for the objects in the world currently 
-# visible. Managing all of that is key. 
-#
-# For simplicity, a Screen object contain a reference to the
-# level it is displaying, and also to the window in which it
-# draws its elements. So you can use the Screen object to 
-# mediate access to both the level and the window if you need
-# to access them.
-# 
-# You'll DEFINITELY want to add methods to this class. 
-# Like, a lot of them.
-#
+
 class Screen (object):
     def __init__ (self,level,window,cx,cy):
         self._level = level
         self._window = window
-        self._cx = cx    # the initial center tile position 
-        self._cy = cy    #  of the screen
+        self._cx = cx 
+        self._cy = cy   
         self._texts = []
-        # Background is black
         bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
         bg.setFill("black")
         bg.setOutline("black")
@@ -52,7 +37,7 @@ class Screen (object):
         buttonText.draw(self._window)
 
     def makeDialogue(self, status, name, knowledge, items):
-        name = Text(Point(60,WINDOW_HEIGHT+37), name + " says:")
+        name = Text(Point(100,WINDOW_HEIGHT+37), name + " says:")
         bubble = Rectangle(Point(20, WINDOW_HEIGHT + 20), Point(WINDOW_HEIGHT-20, WINDOW_WIDTH+180))
         ok = Rectangle(Point(WINDOW_HEIGHT-120, WINDOW_WIDTH+130), Point(WINDOW_HEIGHT-30, WINDOW_WIDTH+170))
         accept = Text(Point(WINDOW_HEIGHT-75, WINDOW_WIDTH+150), "OK")
@@ -66,6 +51,31 @@ class Screen (object):
         self._dExtra.append(ok)
         self._dExtra.append(accept)
         self._dExtra.append(name)
+        if status == "Zombie":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80),  knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Health: " + str(items[0]._health))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+120), "Type: " + items[0]._status)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+140), "Strength: " + str(items[0]._power))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+160), "Zombies Contained: " + str(len(items[0]._zombies)))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "talk"
+        if status == "feather":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80),  knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Uses Remaining: " + str(items[0]._health))
+            words.draw(self._window)  
+            self._dExtra.append(words)
+            self._dialogue = "talk"
         if status == "talk":
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), knowledge)
             words.draw(self._window)
@@ -159,7 +169,9 @@ class Screen (object):
         elif self.tile(x,y) == 2:
             elt.setFill('sienna')
             elt.setOutline('sienna')
-
+        elif self.tile(x,y) == 3:
+            elt.setFill('darkgrey')
+            elt.setOutline('darkgrey')
 
     def init_move(self, cy, cx):
         dx = (VIEWPORT_WIDTH-1)/2

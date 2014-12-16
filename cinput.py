@@ -25,10 +25,17 @@ class CheckInput (object):
     def firstClick(self, mouse):
         found = self.findObject(mouse, OBJECTS)
         self._selected = found
+        for item in self._player._screen._dButtons:
+            item._sprite.undraw()
+        for item in self._player._screen._dExtra:
+            item.undraw()
+        self._player._screen._dButtons = []
+        self._player._screen._dExtra = []
         if found != None:
             if isinstance(found, Rat):
                 self._player._screen._hub = "Default"
             elif isinstance(found, Zombie):
+                self._player._screen.makeDialogue("Zombie", found._name, found._description, [found])
                 if found._status == "gravestone":
                     self._player._screen._hub = "Gravestone"
                 if found._status == "friend":
@@ -142,7 +149,8 @@ class CheckInput (object):
         found = self.findObject(mouse, self._player._items)
         if isinstance(found, Feather):
             self._buttonState = "Feather"
-            self._selected = found    
+            self._selected = found  
+            self._player._screen.makeDialogue("feather", found._name, found._description, [found])  
 
     def event (self,q):
         key = self._window.checkKey()
