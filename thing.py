@@ -41,7 +41,11 @@ class Thing (Root):
 
     def updateHealth(self, amount):
         self._health = self._health + amount
-        words = Text(self._sprite.p1, "SQUEE")
+        if isinstance(self._sprite, Image):
+            words = Text(self._sprite.anchor, "SQUEE")
+        else:
+            words = Text(self._sprite.p1, "SQUEE")
+        # words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
         if self._health <= 0:
