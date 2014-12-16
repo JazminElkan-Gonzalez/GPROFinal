@@ -58,7 +58,7 @@ class CheckInput (object):
                     if i == 2: #follow
                         self._player._screen._hub = "Default"
                         self._selected = None
-                        self._player._screen.makeHub(self._selected)
+                        self._player._screen.makeHub(self._selected)  
                     else:
                         self._buttonState = ZOMBIEBUTT[i]
                     break
@@ -98,7 +98,7 @@ class CheckInput (object):
             self._selected._movement = "attack"
             setAttack(self.findObject(mouse))
         elif self._buttonState == "Group":
-            pass
+            self._selected.combine(self.findObject(mouse))
         else:
             pass
         self._buttonState = None
