@@ -107,11 +107,6 @@ class Screen (object):
             self._dExtra.append(words)
             self._dialogue = "heal"
 
-
-
-
-
-
     def makeHub(self, selected):
         part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
         for i in range(len(self._buttons)):
@@ -154,9 +149,14 @@ class Screen (object):
         vY = VIEWPORT_HEIGHT-1
         for tile in self._current:
             tile.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
-            if tile.p1.x < 0 and tile.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.p1.y < 0 and title.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                tile.undraw()
-                self._current.remove(tile)
+            if isinstance(tile, Rectangle):
+                if tile.p1.x < 0 and tile.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.p1.y < 0 and title.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                    tile.undraw()
+                    self._current.remove(tile)
+            elif isinstance(tile, Image):
+                if tile.anchor.x < 0 and tile.anchor.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.anchor.y < 0 and title.anchor.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                    tile.undraw()
+                    self._current.remove(tile)
 
 
     def find_colors(self, x,y, elt):
@@ -176,10 +176,12 @@ class Screen (object):
     def find_images(self,x,y):
         if self.tile(x,y) == 0:
             return 'lightGrass.gif'
-        if self.tile(x,y) == 1:
+        elif self.tile(x,y) == 1:
             return 'grass.gif'
         elif self.tile(x,y) == 2:
             return 'tree.gif'
+        elif self.tile(x,y) == 3:
+            return 'wall.gif'
 
     def init_move(self, cy, cx):
         dx = (VIEWPORT_WIDTH-1)/2
@@ -188,10 +190,11 @@ class Screen (object):
             for x in range(LEVEL_WIDTH):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
-                # elt = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self.find_images(x,y))
-                elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),self.find_images(x,y))
+                # elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                 self._current.append(elt)
-                self.find_colors(x,y, elt)
+                if isinstance(elt, Rectangle):
+                    self.find_colors(x,y, elt)
                 elt.draw(self._window)
         self.move(0,0)
 
