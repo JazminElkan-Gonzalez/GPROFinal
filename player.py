@@ -12,6 +12,7 @@ class Player (Character):
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._healthBar = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
         self._gold = gold
+    
     def is_player (self):
         return True
 
@@ -21,6 +22,12 @@ class Player (Character):
         posY = WINDOW_HEIGHT + 20 + math.floor((len(self._items)-1)/5)*(TILE_SIZE+2)
         item._sprite.move(posX - item._sprite.p1.x, posY - item._sprite.p1.y)
 
+    def pickup(self, item):
+        item.pickup(self)
+        self.addInventory(item)
+        item._sprite.undraw()
+        item._sprite.draw(self._screen._window)
+        OBJECTS.remove(item)
 
     def changeGold(self, amount):
         print self._gold

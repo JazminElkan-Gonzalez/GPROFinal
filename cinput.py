@@ -11,19 +11,19 @@ class CheckInput (object):
         self._buttonState = None
         self._selected = None
 
-    def findObject(self, mouse):
-        for i in range(len(OBJECTS)):
-            if isinstance(OBJECTS[i]._sprite, Image):
-                xLeft = OBJECTS[i]._sprite.getAnchor().x - TILE_SIZE/2
-                yLeft = OBJECTS[i]._sprite.getAnchor().y - TILE_SIZE/2
+    def findObject(self, mouse, objList):
+        for i in range(len(objList)):
+            if isinstance(objList[i]._sprite, Image):
+                xLeft = objList[i]._sprite.getAnchor().x - TILE_SIZE/2
+                yLeft = objList[i]._sprite.getAnchor().y - TILE_SIZE/2
             else:
-                xLeft = OBJECTS[i]._sprite.p1.x
-                yLeft = OBJECTS[i]._sprite.p1.y
+                xLeft = objList[i]._sprite.p1.x
+                yLeft = objList[i]._sprite.p1.y
             if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
-                return OBJECTS[i]
+                return objList[i]
 
     def firstClick(self, mouse):
-        found = self.findObject(mouse)
+        found = self.findObject(mouse, OBJECTS)
         self._selected = found
         if found != None:
             if isinstance(found, Rat):
@@ -41,7 +41,10 @@ class CheckInput (object):
                     words.draw(self._player._screen._window)
                     self._player._screen.addText(words)
             elif isinstance(found, Feather):
-                pass
+                self._player._screen.makeDialogue("talk", found._name, found._description, [])
+                self._player.pickup(found)
+                self._player._screen._hub = "Default"
+                self._selected = None
         else:
             self._player._screen._hub = "Default"
             self._selected = None
@@ -99,26 +102,20 @@ class CheckInput (object):
             self._selected._walkToY = mouse.y
         elif self._buttonState == "Attack":
             self._selected._movement = "attack"
-            self._selected.setAttack(self.findObject(mouse))
+            self._selected.setAttack(self.findObject(mouse, OBJECTS))
         elif self._buttonState == "Group":
-            self._selected.combine(self.findObject(mouse))
+            self._selected.combine(self.findObject(mouse, OBJECTS))
+        elif self._buttonState == "Feather":
+            found = self.findObject(mouse, OBJECTS)
+            if isinstance(found, Zombie):
+                found.updateHealth(5)
+                self._selected.use()
         else:
             pass
         self._buttonState = None
         self._selected = None
         self._player._screen._hub = "Default"
         self._player._screen.makeHub(self._selected)
-
-    def findInInventory(self, mouse):
-        for i in range(len(self._player._screen._dButtons)):
-            if isinstance(self._player._screen._dButtons[i]._sprite, Image):
-                xLeft = self._player._screen._dButtons[i]._sprite.getAnchor().x - TILE_SIZE/2
-                yLeft = self._player._screen._dButtons[i]._sprite.getAnchor().y - TILE_SIZE/2
-            else:
-                xLeft = self._player._screen._dButtons[i]._sprite.p1.x
-                yLeft = self._player._screen._dButtons[i]._sprite.p1.y
-            if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
-                return self._player._screen._dButtons[i]
 
     def textClick(self,mouse):
         if mouse.x >= WINDOW_HEIGHT-120:
@@ -131,7 +128,7 @@ class CheckInput (object):
             self._player._screen._dButtons = []
             self._player._screen._dExtra = []
         else:
-            bought = self.findInInventory(mouse)
+            bought = self.findObject(mouse, self._player._screen._dButtons)
             if bought != None:
                 if bought._price <= self._player._gold:
                     rect = Rectangle(bought._sprite.p1, bought._sprite.p2)
@@ -140,6 +137,12 @@ class CheckInput (object):
                     rect.draw(self._window)
                     self._player._screen._dExtra.append(rect)
                     bought._user.sold(bought, self._player)
+
+    def inventoryClick(self, mouse):
+        found = self.findObject(mouse, self._player._items)
+        if isinstance(found, Feather):
+            self._buttonState = "Feather"
+            self._selected = found    
 
     def event (self,q):
         key = self._window.checkKey()
@@ -150,9 +153,11 @@ class CheckInput (object):
                     self.firstClick(mouse)
                 else:
                     self.thirdClick(mouse)
-            if mouse.x >= WINDOW_WIDTH:
+            if mouse.y >= WINDOW_HEIGHT and mouse.x >= WINDOW_WIDTH:
+                self.inventoryClick(mouse)
+            elif mouse.x >= WINDOW_WIDTH:
                 self.buttonPress(mouse)
-            if mouse.y >= WINDOW_HEIGHT:
+            elif mouse.y >= WINDOW_HEIGHT:
                 self.textClick(mouse)
         if key == 'q':
             self._window.close()
