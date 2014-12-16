@@ -2,7 +2,7 @@ from util import *
 from character import *
 from npc import *
 from player import *
-from hoard import *
+
 
 # A Rat is an example of a character which defines an event that makes
 # the rat move, so that it can be queued into the event queue to enable
@@ -17,12 +17,13 @@ class Zombie (Character):
         rect.setFill("grey")
         rect.setOutline("black")
 
-        pic = 'zombie.gif'
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+        # pic = 'zombie.gif'
+        # self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
 
-        # self._sprite = rect
+        self._sprite = rect
         self._power = 5
         self._origHealth = health
+        self._zombies = [self]
 
         self._status = "gravestone"
         self._movement = "enemy"
@@ -35,8 +36,8 @@ class Zombie (Character):
     def wakeUp(self):
         if self._status == "gravestone":
             self._status = "enemy"
-            # self._sprite.setFill("darkgreen")
-            # self._sprite.setOutline("red")
+            self._sprite.setFill("darkgreen")
+            self._sprite.setOutline("red")
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
@@ -50,17 +51,30 @@ class Zombie (Character):
         if self._status == "enemy":
             self._status = "friend"
             self._movement = "follow"
-            # self._sprite.setOutline("green")
+            self._sprite.setOutline("green")
             self._health = self._origHealth
         if self._status == "friend":
             pass
+        if self._status == "hoard": 
+            #TODO: these are temporary. write thing.die()
+            self._sprite.setOutline("black")
+            self._status = "gravestone"
+
+    def zombieNum(self):
+        return len(self._zombies)
+
+    def addZombie(self,zombie):
+        self._zombies.append(zombie)
+        self._health = self._health + zombie._health
+        self._power = self._power + zombie._power
 
     def combine(self,partner):
         if isinstance(partner, Zombie):
-            Hoard("HOARD", "A hoard of zombies! It's loyal to you.",[self,partner])
-        elif isinstance(partner, Hoard):
-            partner.addZombie(self)
-            # self._hoard = partner
+            self.addZombie(partner)
+            self._sprite.setOutline("yellow")
+            # self._status = "hoard"
+            partner._status = "hoard"
+            partner.die()
         else:
             print "You can't make a hoard with that!"
 
@@ -123,8 +137,6 @@ class Zombie (Character):
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
                 newX, newY = self.walkTo(self._walkToX, self._walkToY)
-            # if self._movement == "attack":
-            # self._attackObject
 
             for i in range(len(OBJECTS)):
                 if OBJECTS[i]._x == self._x + newX and OBJECTS[i]._y == self._y + newY:
@@ -156,3 +168,4 @@ class Zombie (Character):
 
 
 
+# from hoard import *
