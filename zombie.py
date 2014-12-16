@@ -175,7 +175,7 @@ class Zombie (Character):
             for thing in OBJECTS:
                 if thing != self:
                     if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1):
-                        if not ((thing == self.player or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
+                        if not ((thing == self.player or (isinstance(thing, NPC) and self._status == "friend") or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #TODO: fix that one attacks more than the other
                                 #TODO: fix that friendly zombies randomly attack NPCs
