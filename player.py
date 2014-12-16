@@ -8,7 +8,7 @@ class Player (Character):
     def __init__ (self,health,name, items, gold):
         Character.__init__(self,name,"Yours truly", health, items)
         log("Player.__init__ for "+str(self))
-        pic = 't_android_red.gif'
+        pic = 'necromancer.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._healthBar = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
         self._gold = gold

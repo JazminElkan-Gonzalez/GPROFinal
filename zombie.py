@@ -18,8 +18,8 @@ class Zombie (Character):
         rect.setOutline("black")
         self._sprite = rect
 
-        # pic = 'zombie.gif'
-        # self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+        pic = 'zombie2.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
 
         
         self._power = 5
@@ -38,8 +38,8 @@ class Zombie (Character):
     def wakeUp(self):
         if self._status == "gravestone":
             self._status = "enemy"
-            self._sprite.setFill("darkgreen")
-            self._sprite.setOutline("red")
+            # self._sprite.setFill("darkgreen")
+            # self._sprite.setOutline("red")
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
@@ -53,7 +53,7 @@ class Zombie (Character):
         if self._status == "enemy":
             self._status = "friend"
             self._movement = "follow"
-            self._sprite.setOutline("green")
+            # self._sprite.setOutline("green")
             self._health = self._origHealth
         # elif self._status == "friend":
         #     self.die()
