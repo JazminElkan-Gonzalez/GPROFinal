@@ -1,11 +1,12 @@
 from character import *
 from screen import *
+import math
 #
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,health,name, items, prices, gold):
-        Character.__init__(self,name,"Yours truly", health, items, prices)
+    def __init__ (self,health,name, items, gold):
+        Character.__init__(self,name,"Yours truly", health, items)
         log("Player.__init__ for "+str(self))
         pic = 't_android_red.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
@@ -13,6 +14,21 @@ class Player (Character):
         self._gold = gold
     def is_player (self):
         return True
+
+    def addInventory(self, item):
+        self._items.append(item)
+        posX = WINDOW_WIDTH + 20 + ((len(self._items)-1)%5)*(TILE_SIZE+2)
+        posY = WINDOW_HEIGHT + 20 + math.floor((len(self._items)-1)/5)*(TILE_SIZE+2)
+        item._sprite.move(posX - item._sprite.p1.x, posY - item._sprite.p1.y)
+
+
+    def changeGold(self, amount):
+        print self._gold
+        self._goldText.undraw()
+        self._gold = self._gold + amount
+        print self._gold
+        self._goldText = Text(Point(WINDOW_WIDTH + 100, WINDOW_HEIGHT), "Gold: " + str(self._gold))
+        self._goldText.draw(self._screen._window)
 
     def update_pos(self, dx, dy):
         pass
@@ -85,4 +101,17 @@ class Player (Character):
         self._preHealth = Text(Point(WINDOW_WIDTH+1.5*TILE_SIZE,1.5*TILE_SIZE), str(self._health))
         self._preHealth.draw(self._screen._window)
         self._maxHealth = self._health
+        self._goldText = Text(Point(WINDOW_WIDTH + 100, WINDOW_HEIGHT), "Gold: " + str(self._gold))
+        self._goldText.draw(self._screen._window)
+        for i in range(36):
+            posX = WINDOW_WIDTH + 20 + (i%6)*(TILE_SIZE+2)
+            posY = WINDOW_HEIGHT + 20 + math.floor(i/6)*(TILE_SIZE+2)
+            elt = Rectangle(Point(posX, posY), Point(posX+TILE_SIZE-1, posY+TILE_SIZE-1))
+            elt.setFill('grey')
+            elt.setOutline('darkgrey')
+            elt.draw(self._screen._window)
+            if i < len(self._items):
+                self._items[i]._sprite.move(posX - self._items[i]._sprite.p1.x, posY - self._items[i]._sprite.p1.y)
+                self._items[i]._sprite.draw(self._screen._window)         
+
         return self

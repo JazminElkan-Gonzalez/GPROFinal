@@ -1,5 +1,6 @@
 from graphics import *
 from util import *
+import math
 #
 # A Screen is a representation of the level displayed in the 
 # viewport, with a representation for all the tiles and a 
@@ -50,7 +51,7 @@ class Screen (object):
         button.draw(self._window)
         buttonText.draw(self._window)
 
-    def makeDialogue(self, status, name, knowledge, items, prices):
+    def makeDialogue(self, status, name, knowledge, items):
         name = Text(Point(60,WINDOW_HEIGHT+37), name + " says:")
         bubble = Rectangle(Point(20, WINDOW_HEIGHT + 20), Point(WINDOW_HEIGHT-20, WINDOW_WIDTH+180))
         ok = Rectangle(Point(WINDOW_HEIGHT-120, WINDOW_WIDTH+130), Point(WINDOW_HEIGHT-30, WINDOW_WIDTH+170))
@@ -62,7 +63,7 @@ class Screen (object):
         accept.draw(self._window)
         name.draw(self._window)
         self._dExtra.append(bubble)
-        self._dButtons.append(ok)
+        self._dExtra.append(ok)
         self._dExtra.append(accept)
         self._dExtra.append(name)
         if status == "talk":
@@ -75,11 +76,29 @@ class Screen (object):
             words.draw(self._window)
             self._dExtra.append(words)
             self._dialogue = "sell"
+            for i in range(20):
+                posX = 80 + (i%10)*(TILE_SIZE+2)
+                posY = WINDOW_HEIGHT + 100  + math.floor(i/10)*(TILE_SIZE+2)
+                elt = Rectangle(Point(posX, posY), Point(posX+TILE_SIZE-1, posY+TILE_SIZE-1))
+                elt.setFill('grey')
+                elt.setOutline('darkgrey')
+                elt.draw(self._window)
+                self._dExtra.append(elt)
+            for i in range(len(items)):
+                items[i]._sprite.draw(self._window)
+                thing = items[i]
+                thingText = Text(Point(items[i]._sprite.p1.x+TILE_SIZE/2, items[i]._sprite.p1.y+TILE_SIZE/2), str(items[i]._price))
+                thingText.draw(self._window)
+                self._dButtons.append(thing)
+                self._dExtra.append(thingText)
         elif status == "heal":
             words = Text(Point(200,WINDOW_HEIGHT+60), "Well, nothing comes free you know...")
             words.draw(self._window)
             self._dExtra.append(words)
             self._dialogue = "heal"
+
+
+
 
 
 

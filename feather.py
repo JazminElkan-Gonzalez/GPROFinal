@@ -11,6 +11,7 @@ class Feather  (Thing):
         rect.setOutline("yellow")
         self._sprite = rect
         self._user = None
+        self._price = 10
 
     def use(self, user):
         self._health = self._health - 1
