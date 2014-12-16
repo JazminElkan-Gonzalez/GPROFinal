@@ -2,7 +2,7 @@ from util import *
 from character import *
 from npc import *
 from player import *
-from hoard import *
+
 
 # A Rat is an example of a character which defines an event that makes
 # the rat move, so that it can be queued into the event queue to enable
@@ -16,13 +16,16 @@ class Zombie (Character):
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("grey")
         rect.setOutline("black")
+        self._sprite = rect
 
-        pic = 'zombie.gif'
+        pic = 'zombie2.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
 
-        # self._sprite = rect
+        
         self._power = 5
         self._origHealth = health
+        self._zombies = [self]
+        self._dead = False
 
         self._status = "gravestone"
         self._movement = "enemy"
@@ -52,15 +55,39 @@ class Zombie (Character):
             self._movement = "follow"
             # self._sprite.setOutline("green")
             self._health = self._origHealth
-        if self._status == "friend":
-            pass
+        # elif self._status == "friend":
+        #     self.die()
+        #     self._dead = True
+        elif self._status == "hoard" or self._status == "friend": 
+            OBJECTS.remove(self)
+            self._sprite.undraw()
+            self._status = "friend"
+            self._dead = True
+
+    def zombieNum(self):
+        return len(self._zombies)
+
+    def addZombieStats(self,zombie):
+        # self._zombies.append(zombie)
+        self._health = self._health + zombie._health
+        self._power = self._power + zombie._power
+        # self._freq = self._freq + 20
 
     def combine(self,partner):
-        if isinstance(partner, Zombie):
-            Hoard("HOARD", "A hoard of zombies! It's loyal to you.",[self,partner])
-        elif isinstance(partner, Hoard):
-            partner.addZombie(self)
-            # self._hoard = partner
+        if isinstance(partner, Zombie) and partner != self:
+            if len(partner._zombies) > 1:
+                for zom in partner._zombies:
+                    self._zombies.append(zom)
+            else:
+                self._zombies.append(partner)
+            self.addZombieStats(partner)
+            self._freq = 7*len(self._zombies)+100
+            
+            self._sprite.setOutline("yellow")
+            
+            partner._status = "hoard"
+            partner._power = 0
+            partner.die()
         else:
             print "You can't make a hoard with that!"
 
@@ -88,18 +115,17 @@ class Zombie (Character):
         return newX, newY
 
     def setAttack(self,attackObject):
-        self._walkToX = attackObject._x
-        self._walkToY = attackObject._y
+        self._attackObject = attackObject
         self._movement = "attack"
 
     def updateHealth(self, amount):
+        print self._name, "'s health: ", self._health
         if self._status == "gravestone":
             return
         self._health = self._health + amount
         words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
-        print self._name, "health: ", self._health    
         if self._health == 0:
             self.die()
 
@@ -122,9 +148,7 @@ class Zombie (Character):
             if self._movement == "follow":
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
-                newX, newY = self.walkTo(self._walkToX, self._walkToY)
-            # if self._movement == "attack":
-            # self._attackObject
+                newX, newY = self.walkTo(self._attackObject._x, self._attackObject._y)
 
             for i in range(len(OBJECTS)):
                 if OBJECTS[i]._x == self._x + newX and OBJECTS[i]._y == self._y + newY:
@@ -134,25 +158,19 @@ class Zombie (Character):
             if isObj == False:
                 self.walk(newX,newY)
             
-            # if self._status == "enemy": #add attack mode for friendies
             self.attack()
 
-        self.register(q,self._freq)
+        if self._dead == False:
+            self.register(q,self._freq)
 
     def attack(self):
-        if self._status == "gravestone":
+        if self._status == "gravestone" or self._dead == True:
             pass
         else:
             for thing in OBJECTS:
                 if thing != self:
                     if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1):
-                    # for adj in positions:
-                    #     if (thing._x == self._x + adj[0] and thing._y == self._y + adj[1]):
-                    # if (thing._x == self._x and thing._y == self._y -1) or (thing._x == self._x and thing._y == self._y + 1) or  (thing._x == self._x + 1 and thing._y == self._y) or  (thing._x == self._x - 1 and thing._y == self._y) or (thing._x == self._x and thing._y == self._y):
                         if not ((thing == self.player or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #TODO: fix that one attacks more than the other
                                 #TODO: fix that friendly zombies randomly attack NPCs
-
-
-

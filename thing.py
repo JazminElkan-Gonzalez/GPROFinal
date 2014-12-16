@@ -52,7 +52,7 @@ class Thing (Root):
         words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
-        if self._health == 0:
+        if self._health <= 0:
             self.die()
 
     def die(self):
