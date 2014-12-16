@@ -68,7 +68,7 @@ class CheckInput (object):
                         self._selected.talk()
                         self._selected = None
                         self._player._screen.makeHub(self._selected)
-                    if i == 1: #sell this is going to be changed
+                    if i == 1: #sell
                         self._player._screen._hub = "Default"
                         self._selected.sell()
                         self._selected = None
@@ -106,23 +106,38 @@ class CheckInput (object):
         self._player._screen._hub = "Default"
         self._player._screen.makeHub(self._selected)
 
-    def textClick(self,mouse):
+    def findInInventory(self, mouse):
         for i in range(len(self._player._screen._dButtons)):
-            yLeft = self._player._screen._dButtons[i].p1.y
-            xLeft = self._player._screen._dButtons[i].p1.x
-            yRight = self._player._screen._dButtons[i].p2.y
-            xRight = self._player._screen._dButtons[i].p2.x
-            if mouse.x > xLeft and mouse.x < xRight and mouse.y > yLeft and mouse.y < yRight:
-                if mouse.x >= WINDOW_HEIGHT-120:
-                    if self._player._screen._dialogue == "heal":
-                        self._player.updateHealth(self._player._maxHealth - self._player._health)
-                    for item in self._player._screen._dButtons:
-                        item.undraw()
-                    for item in self._player._screen._dExtra:
-                        item.undraw()
-                    self._player._screen._dButtons = []
-                    self._player._screen._dExtra = []
-                break
+            if isinstance(self._player._screen._dButtons[i]._sprite, Image):
+                xLeft = self._player._screen._dButtons[i]._sprite.getAnchor().x - TILE_SIZE/2
+                yLeft = self._player._screen._dButtons[i]._sprite.getAnchor().y - TILE_SIZE/2
+            else:
+                xLeft = self._player._screen._dButtons[i]._sprite.p1.x
+                yLeft = self._player._screen._dButtons[i]._sprite.p1.y
+            if mouse.x > xLeft and mouse.x < xLeft + TILE_SIZE and mouse.y > yLeft and mouse.y < yLeft + TILE_SIZE:
+                return self._player._screen._dButtons[i]
+
+    def textClick(self,mouse):
+        if mouse.x >= WINDOW_HEIGHT-120:
+            if self._player._screen._dialogue == "heal":
+                self._player.updateHealth(self._player._maxHealth - self._player._health)
+            for item in self._player._screen._dButtons:
+                item._sprite.undraw()
+            for item in self._player._screen._dExtra:
+                item.undraw()
+            self._player._screen._dButtons = []
+            self._player._screen._dExtra = []
+        else:
+            bought = self.findInInventory(mouse)
+            if bought != None:
+                if bought._price <= self._player._gold:
+                    rect = Rectangle(bought._sprite.p1, bought._sprite.p2)
+                    rect.setFill('grey')
+                    rect.setOutline('darkgrey')
+                    rect.draw(self._window)
+                    self._player._screen._dExtra.append(rect)
+                    bought._user.sold(bought, self._player)
+
 
 
     def event (self,q):
