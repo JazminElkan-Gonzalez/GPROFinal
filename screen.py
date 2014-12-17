@@ -32,7 +32,7 @@ class Screen (object):
         buttonText = Text(Point(xMid, start+(3*pos+2)*part), text)
         self._buttons.append(button)
         self._bText.append(buttonText)
-        button.setFill("darkgrey")
+        button.setFill("grey")
         button.draw(self._window)
         buttonText.draw(self._window)
 

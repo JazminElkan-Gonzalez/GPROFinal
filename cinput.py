@@ -89,6 +89,9 @@ class CheckInput (object):
         for i in range(len(self._player._screen._buttons)):
             yLeft = self._player._screen._buttons[i].p1.y
             if mouse.x > xLeft and mouse.x < xRight and mouse.y > yLeft and mouse.y < yLeft + 2*part:
+                #self._player._screen._buttons[i].undraw()
+                self._player._screen._buttons[i].setFill('darkgray')
+                #self._player._screen._buttons[i].draw(self._window)
                 if self._player._screen._hub == "Friend":
                     if i == 4: #mode
                         self._player._screen._hub = "Default"
