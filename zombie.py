@@ -65,6 +65,8 @@ class Zombie (Character):
             self._sprite.undraw()
             self._status = "friend"
             self._dead = True
+        if self._name == "King Prometheus the Green":
+            win(self._screen._window)
 
     def zombieNum(self):
         return len(self._zombies)
@@ -192,7 +194,7 @@ class Zombie (Character):
         self._x = x
         self._y = y
         if self._name != "King Prometheus the Green":
-            self._screen._level.makeDecay(self._y*LEVEL_WIDTH+self._x, round(self._power/5))
+            self._screen._level.makeDecay(self._y*LEVEL_WIDTH+self._x, round(self._power/5)+1)
         else:
             self._screen._level.makeDecay(self._y*LEVEL_WIDTH+self._x, 6)
 

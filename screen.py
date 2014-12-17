@@ -116,7 +116,7 @@ class Screen (object):
             self._dialogue = "sell"
             for i in range(20):
                 posX = 80 + (i%10)*(TILE_SIZE+2)
-                posY = WINDOW_HEIGHT + 100  + math.floor(i/10)*(TILE_SIZE+2)
+                posY = WINDOW_HEIGHT + 100  + math.floor(i/10)*(1.5*TILE_SIZE)
                 elt = Rectangle(Point(posX, posY), Point(posX+TILE_SIZE-1, posY+TILE_SIZE-1))
                 elt.setFill('grey')
                 elt.setOutline('darkgrey')
@@ -125,7 +125,7 @@ class Screen (object):
             for i in range(len(items)):
                 items[i]._sprite.draw(self._window)
                 thing = items[i]
-                thingText = Text(Point(items[i]._sprite.p1.x+TILE_SIZE/2, items[i]._sprite.p1.y+TILE_SIZE/2), str(items[i]._price))
+                thingText = Text(Point(items[i]._sprite.anchor.x+TILE_SIZE/2, items[i]._sprite.anchor.y+TILE_SIZE/2), str(items[i]._price))
                 thingText.draw(self._window)
                 self._dButtons.append(thing)
                 self._dExtra.append(thingText)
