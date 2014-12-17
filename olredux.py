@@ -52,7 +52,9 @@ def main ():
     Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,10).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-21)
     zombieNames = ["Rhionnon", "Suellen", "Dewey", "Dortha", "Salvador", "Earlean", "Terence", "Earlean", "Terence", "Norman", "Chaya", "Cameron", "Sharee", "Blondell", "Charles", "Kori", "Florencia", "Gayle", "Lin", "Devona", "Trina", "Tessie"]
     for i in range(20):
-        Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,(20-i+1)*10).materialize(scr,random.randrange(LEVEL_WIDTH/2-10),random.randrange(LEVEL_HEIGHT))
+        x = random.randrange(1,LEVEL_WIDTH/2-10)
+        y = random.randrange(1,LEVEL_HEIGHT-1)
+        Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,(20-i+1)*10).materialize(scr,x,y)
     
     Zombie("King Prometheus the Green", "Your Biggest Mistake....", 2100).register(q,(i+1)*10).materialize(scr,LEVEL_WIDTH-10,10)
 
