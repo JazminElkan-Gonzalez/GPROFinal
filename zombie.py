@@ -157,6 +157,8 @@ class Zombie (Character):
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
                 newX, newY = self.walkTo(self._attackObject._x, self._attackObject._y)
+                if self._attackObject._dead == True:
+                    self._movement = "follow"
             if self._movement == "walkTo":
                 newX, newY = self.walkTo(self._walkToX, self._walkToY)
 
@@ -183,4 +185,3 @@ class Zombie (Character):
                         if not ((thing == self.player or (isinstance(thing, NPC) and self._status == "friend") or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #TODO: fix that one attacks more than the other
-                                #TODO: fix that friendly zombies randomly attack NPCs
