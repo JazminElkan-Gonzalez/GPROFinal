@@ -198,7 +198,8 @@ class Screen (object):
             # return 'lightGrass.gif'
             return 'lightGrassBrown.gif'
         elif self.tile(x,y) == 1:
-            return 'grass.gif'
+            # return 'grass.gif'
+            return 'grassBrown.gif'
         elif self.tile(x,y) == 2:
             # return 'tree.gif'
             return 'treeBrown.gif'
