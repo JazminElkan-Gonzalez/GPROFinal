@@ -4,8 +4,8 @@ from graphics import *
 
 
 # Tile size of the level
-LEVEL_WIDTH = 50
-LEVEL_HEIGHT = 50
+LEVEL_WIDTH =  70
+LEVEL_HEIGHT = 70
 
 # Tile size of the viewport (through which you view the level)
 VIEWPORT_WIDTH = 21

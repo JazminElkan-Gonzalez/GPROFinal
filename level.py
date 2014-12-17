@@ -34,12 +34,18 @@ class Level (object):
         maps = [0] * size
         for i in range(100):
             maps[random.randrange(size)] = 1
-        # for i in range(50):
-        #     maps[random.randrange(size)] = 2
+        for i in range(50):
+            maps[random.randrange(size)] = 2
         self._map = maps
         self.outterEdge()
-        self.makeForest(10*LEVEL_WIDTH + 20,5)
-        self.makeBuilding(10*LEVEL_WIDTH + 10, 2)
+        #self.makeForest(10*LEVEL_WIDTH + LEVEL_WIDTH - 20,5)
+        #self.makeForest(21*LEVEL_WIDTH + LEVEL_WIDTH - 20,5)
+        self.makeBuilding(7*LEVEL_WIDTH  + LEVEL_WIDTH-20, 2,2, "S")
+        self.makeBuilding(10*LEVEL_WIDTH + LEVEL_WIDTH-10,6,6,"W")
+        #self.makeBuilding(13*LEVEL_WIDTH  + LEVEL_WIDTH-20, 2,2, "N")
+        self.makeBuilding(13*LEVEL_WIDTH  + LEVEL_WIDTH-23, 4,2, "N")
+        self.makeBuilding(7*LEVEL_WIDTH  + LEVEL_WIDTH-26, 2,2, "S")
+
 
     def outterEdge(self):
         for i in range(LEVEL_WIDTH):
@@ -48,18 +54,25 @@ class Level (object):
             self._map[i*LEVEL_WIDTH] = 3
             self._map[i*(LEVEL_WIDTH)-1] = 3
 
-    def makeBuilding(self, pos, size):
-        for i in range(1+size):
-            self._map[pos-size+i*LEVEL_WIDTH] = 3
-            self._map[pos-size-i*LEVEL_WIDTH] = 3
-            if i != 0:
-                self._map[pos+size+i*LEVEL_WIDTH] = 3
-                self._map[pos+size-i*LEVEL_WIDTH] = 3
-            self._map[pos-size*LEVEL_WIDTH+i] = 3
-            self._map[pos-size*LEVEL_WIDTH-i] = 3
-            self._map[pos+size*LEVEL_WIDTH-i] = 3
-            self._map[pos+size*LEVEL_WIDTH+i] = 3
-
+    def makeBuilding(self, pos, length, width, door):
+        for i in range(1+width):
+            self._map[pos-length+i*LEVEL_WIDTH] = 3
+            self._map[pos-length-i*LEVEL_WIDTH] = 3
+            self._map[pos+length+i*LEVEL_WIDTH] = 3
+            self._map[pos+length-i*LEVEL_WIDTH] = 3
+        for i in range(1+length):
+            self._map[pos-width*LEVEL_WIDTH+i] = 3
+            self._map[pos-width*LEVEL_WIDTH-i] = 3
+            self._map[pos+width*LEVEL_WIDTH-i] = 3
+            self._map[pos+width*LEVEL_WIDTH+i] = 3
+            if door == "W":
+                self._map[pos-length] = 0 
+            if door == "E":
+                self._map[pos+length] = 0 
+            if door == "N":
+                self._map[pos-width*LEVEL_WIDTH] = 0 
+            if door == "S":
+                self._map[pos+width*LEVEL_WIDTH] = 0 
 
     def makeForest(self, pos, size):
         for i in range(size):
@@ -67,10 +80,15 @@ class Level (object):
             self._map[pos+i] = 2
             self._map[pos-LEVEL_WIDTH*i] = 2
             self._map[pos+LEVEL_WIDTH*i] = 2
-            self._map[pos-LEVEL_WIDTH*i-i] = 2
-            self._map[pos+LEVEL_WIDTH*i-i] = 2
-            self._map[pos-LEVEL_WIDTH*i+i] = 2
-            self._map[pos+LEVEL_WIDTH*i+i] = 2
+            for w in range(i+1):
+                self._map[pos-LEVEL_WIDTH*i-w] = 2
+                self._map[pos+LEVEL_WIDTH*i-w] = 2
+                self._map[pos-LEVEL_WIDTH*i+w] = 2
+                self._map[pos+LEVEL_WIDTH*i+w] = 2
+                self._map[pos-i-w*LEVEL_WIDTH] = 2
+                self._map[pos+i-w*LEVEL_WIDTH] = 2
+                self._map[pos-i+w*LEVEL_WIDTH] = 2
+                self._map[pos+i+w*LEVEL_WIDTH] = 2
     def makeZomArea(self, pos, power):
         pass
 
