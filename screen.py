@@ -16,7 +16,7 @@ class Screen (object):
         self._current = []
         self._hub = "Default"
         self._dialogue = "talk"
-        self.init_move(cy,  cx)
+        # self.init_move(cy,  cx)
         self._buttons = []
         self._bText = []
         self._dButtons = []
