@@ -3,6 +3,7 @@ from zombie import *
 from npc import *
 from rat import *
 from feather import *
+from status import *
 
 class CheckInput (object):
     def __init__ (self,window,player):
@@ -59,6 +60,17 @@ class CheckInput (object):
                 if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
                     self._player._screen.makeDialogue("feather", found._name, found._description, [found])
                     self._player.pickup(found)
+                    self._player._screen._hub = "Default"
+                    self._selected = None    
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
+                    self._selected = None
+            elif isinstance(found, OlinStatue):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
+                    self._player._screen.makeDialogue("Statue", found._name, found._description, [found])
                     self._player._screen._hub = "Default"
                     self._selected = None    
                 else:

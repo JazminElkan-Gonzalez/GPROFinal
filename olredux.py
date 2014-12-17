@@ -45,7 +45,7 @@ def main ():
 
     #Strat Area
     Zombie("ZOMZOM", "Your Only friend. Wake her up when you need her!! ", 50).register(q,100).materialize(scr,LEVEL_WIDTH-34,10)
-    OlinStatue("King statue","The King once ruled these lands fairly. He was much loved... ", 5000).materialize(scr,LEVEL_WIDTH-35,10)
+    OlinStatue("King statue","King Prometheus once ruled these lands fairly. He was much loved", 5000).materialize(scr,LEVEL_WIDTH-35,10)
     
     #Zombies
     Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,100).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-21)
