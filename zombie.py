@@ -13,9 +13,9 @@ class Zombie (Character):
         rect.setOutline("black")
         self._sprite = rect
 
-        pic = 'zombie2.gif'
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
-
+        # pic = 'zombie2.gif'
+        self._pic = 'gravestone.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic)
         
         self._power = 5
         self._origHealth = health
@@ -36,6 +36,11 @@ class Zombie (Character):
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setFill("darkgreen")
                 self._sprite.setOutline("red")
+            else: 
+                self._pic = 'zombie2.gif'
+                self._sprite.undraw()
+                self._sprite = Image(self._sprite.getAnchor(),self._pic)
+                self._sprite.draw(self._screen._window)
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
