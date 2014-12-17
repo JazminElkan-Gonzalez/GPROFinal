@@ -34,6 +34,7 @@ class CheckInput (object):
         if found != None:
             if isinstance(found, Rat):
                 self._player._screen._hub = "Default"
+                self._player._screen.makeDialogue("Rat", found._name, found._description, [found]) 
             elif isinstance(found, Zombie):
                 self._player._screen.makeDialogue("Zombie", found._name, found._description, [found])
                 if found._status == "gravestone":
@@ -41,6 +42,7 @@ class CheckInput (object):
                 if found._status == "friend":
                     self._player._screen._hub = "Friend"
             elif isinstance(found, NPC):
+                self._player._screen.makeDialogue("NPC", found._name, found._description, [found]) 
                 if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
                     self._player._screen._hub = "NPC"
                 else:
@@ -48,7 +50,7 @@ class CheckInput (object):
                     words.draw(self._player._screen._window)
                     self._player._screen.addText(words)
             elif isinstance(found, Feather):
-                self._player._screen.makeDialogue("talk", found._name, found._description, [])
+                self._player._screen.makeDialogue("feather", found._name, found._description, [found])
                 self._player.pickup(found)
                 self._player._screen._hub = "Default"
                 self._selected = None
@@ -91,6 +93,7 @@ class CheckInput (object):
                     if i == 2: #heal
                         self._player._screen._hub = "Default"
                         self._selected.heal()
+                        self._player.changeGold(-10)
                         self._selected = None
                         self._player._screen.makeHub(self._selected)
                     break

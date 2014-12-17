@@ -69,6 +69,25 @@ class Screen (object):
                 words.draw(self._window)
                 self._dExtra.append(words)
             self._dialogue = "talk"
+        if status == "Rat":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80),  knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Health: " + str(items[0]._health))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+120), "Strength: " + str(items[0]._power))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "talk"
+        if status == "NPC":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80), "I am a " +  knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Health: " + str(items[0]._health))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "talk"
         if status == "feather":
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80),  knowledge)
             words.draw(self._window)

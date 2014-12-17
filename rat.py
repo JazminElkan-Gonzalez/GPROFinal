@@ -23,7 +23,7 @@ class Rat (Character):
         print "Type rat: ", type(rect)
         self._direction = random.randrange(4)
         self._dead = False
-
+        self._power = 5
     # A helper method to register the Rat with the event queue
     # Call this method with a queue and a time delay before
     # the event is called
@@ -51,4 +51,4 @@ class Rat (Character):
     def attack(self):
         for thing in OBJECTS:
             if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1) and (thing != self):
-                thing.updateHealth(-5)
+                thing.updateHealth(-self._power)
