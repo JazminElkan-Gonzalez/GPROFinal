@@ -58,8 +58,8 @@ def main ():
 
     #Castle
     Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,LEVEL_WIDTH-5,15)
-    Rat("Brain","A rat with a big head", 50).register(q,600).materialize(scr,LEVEL_WIDTH-4,14)
-    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,LEVEL_WIDTH-6,16)
+    Rat("Brain","A rat with a big head", 50).register(q,600).materialize(scr,LEVEL_WIDTH-9,9)
+    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,LEVEL_WIDTH-11,11)
     
     #Town Folk
     fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)
@@ -76,7 +76,7 @@ def main ():
         scr.add(item,item._x,item._y)
 
     create_panel(window)
-    p = Player(30, "...what's your name, bub?...", [], 10).materialize(scr,playerX ,playerY)
+    p = Player(30, "Life Mage", [], 10).materialize(scr,playerX ,playerY)
 
 
 

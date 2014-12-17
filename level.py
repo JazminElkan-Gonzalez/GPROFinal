@@ -72,7 +72,7 @@ class Level (object):
                 self._map[pos+width*LEVEL_WIDTH] = 0 
 
     def areaRange(self, value):
-        if value < len(self._map) and value >= 0:
+        if value < len(self._map) and value >= 0 and self._map[value] != 3:
             self._map[value] = 1
 
     def makeDecay(self, pos, size):
