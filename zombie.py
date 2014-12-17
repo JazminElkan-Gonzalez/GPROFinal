@@ -20,12 +20,11 @@ class Zombie (Character):
         self._power = 5
         self._origHealth = health
         self._zombies = [self]
-        self._dead = False
 
         self._status = "gravestone"
         self._movement = "enemy"
         # self._movement = "attack"
-        # self._attackObject
+        self._attackObject = None
 
     def move(self,newX,newY):
         print self._x, self._y
@@ -182,6 +181,6 @@ class Zombie (Character):
             for thing in OBJECTS:
                 if thing != self:
                     if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1):
-                        if not ((thing == self.player or (isinstance(thing, NPC) and self._status == "friend") or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
+                        if not ((thing == self.player or (isinstance(thing, NPC) and self._status == "friend" and thing != self._attackObject) or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #TODO: fix that one attacks more than the other

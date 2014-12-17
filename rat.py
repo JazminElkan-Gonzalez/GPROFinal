@@ -21,7 +21,6 @@ class Rat (Character):
 
         print "Type rat: ", type(rect)
         self._direction = random.randrange(4)
-        self._dead = False
         self._power = 5
     # A helper method to register the Rat with the event queue
     # Call this method with a queue and a time delay before

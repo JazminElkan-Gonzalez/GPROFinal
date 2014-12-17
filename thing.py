@@ -8,6 +8,7 @@ class Thing (Root):
         self._description = desc
         self._health = health
         self._sprite = Text(Point(TILE_SIZE/2,TILE_SIZE/2),"?")
+        self._dead = False
         log("Thing.__init__ for "+str(self))
 
     def __str__ (self):
