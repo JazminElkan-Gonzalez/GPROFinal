@@ -1,6 +1,7 @@
 from character import *
 import time
-
+from player import *
+from zombie import *
 # 
 # A Rat is an example of a character which defines an event that makes
 # the rat move, so that it can be queued into the event queue to enable
@@ -48,5 +49,5 @@ class Rat (Character):
         
     def attack(self):
         for thing in OBJECTS:
-            if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1) and (thing != self):
+            if (self._x - 1 <= thing._x <= self._x + 1) and (self._y - 1 <= thing._y <= self._y + 1) and (thing != self) and (isinstance(thing, Player) or (isinstance(thing, Zombie) and thing._status == "friend")):
                 thing.updateHealth(-self._power)

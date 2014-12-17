@@ -3,6 +3,7 @@ from zombie import *
 from npc import *
 from rat import *
 from feather import *
+from status import *
 
 class CheckInput (object):
     def __init__ (self,window,player):
@@ -32,28 +33,62 @@ class CheckInput (object):
         self._player._screen._dButtons = []
         self._player._screen._dExtra = []
         if found != None:
-            if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
-                if isinstance(found, Rat):
+            if isinstance(found, Rat):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 5*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 5*TILE_SIZE:
                     self._player._screen._hub = "Default"
-                    self._player._screen.makeDialogue("Rat", found._name, found._description, [found]) 
-                elif isinstance(found, Zombie):
+                    self._player._screen.makeDialogue("Rat", found._name, found._description, [found])
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
+                    self._selected = None
+            elif isinstance(found, Zombie):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 5*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 5*TILE_SIZE:
                     self._player._screen.makeDialogue("Zombie", found._name, found._description, [found])
                     if found._status == "gravestone":
                         self._player._screen._hub = "Gravestone"
                     if found._status == "friend":
                         self._player._screen._hub = "Friend"
-                elif isinstance(found, NPC):
-                    self._player._screen.makeDialogue("NPC", found._name, found._description, [found]) 
-                    self._player._screen._hub = "NPC"
-                elif isinstance(found, Feather):
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
+                    self._selected = None
+            elif isinstance(found, Feather):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
                     self._player._screen.makeDialogue("feather", found._name, found._description, [found])
                     self._player.pickup(found)
                     self._player._screen._hub = "Default"
+                    self._selected = None    
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
                     self._selected = None
-            else:
-                words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
-                words.draw(self._player._screen._window)
-                self._player._screen.addText(words)
+            elif isinstance(found, OlinStatue):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
+                    self._player._screen.makeDialogue("Statue", found._name, found._description, [found])
+                    self._player._screen._hub = "Default"
+                    self._selected = None    
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
+                    self._selected = None
+            elif isinstance(found, NPC):
+                if abs(mouse.x-self._player._sprite.anchor.x) <= 3*TILE_SIZE and abs(mouse.y-self._player._sprite.anchor.y) <= 3*TILE_SIZE:
+                    self._player._screen.makeDialogue("NPC", found._name, found._description, [found]) 
+                    self._player._screen._hub = "NPC"
+                else:
+                    words  = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Too Far Away!")
+                    words.draw(self._player._screen._window)
+                    self._player._screen.addText(words)
+                    self._player._screen._hub = "Default"
+                    self._selected = None         
         else:
             self._player._screen._hub = "Default"
             self._selected = None
@@ -66,6 +101,9 @@ class CheckInput (object):
         for i in range(len(self._player._screen._buttons)):
             yLeft = self._player._screen._buttons[i].p1.y
             if mouse.x > xLeft and mouse.x < xRight and mouse.y > yLeft and mouse.y < yLeft + 2*part:
+                #self._player._screen._buttons[i].undraw()
+                self._player._screen._buttons[i].setFill('darkgray')
+                #self._player._screen._buttons[i].draw(self._window)
                 if self._player._screen._hub == "Friend":
                     if i == 4: #mode
                         self._player._screen._hub = "Default"

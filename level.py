@@ -38,11 +38,8 @@ class Level (object):
             maps[random.randrange(size)] = 2
         self._map = maps
         self.outterEdge()
-        #self.makeForest(10*LEVEL_WIDTH + LEVEL_WIDTH - 20,5)
-        #self.makeForest(21*LEVEL_WIDTH + LEVEL_WIDTH - 20,5)
         self.makeBuilding(7*LEVEL_WIDTH  + LEVEL_WIDTH-20, 2,2, "S")
         self.makeBuilding(10*LEVEL_WIDTH + LEVEL_WIDTH-10,6,6,"W")
-        #self.makeBuilding(13*LEVEL_WIDTH  + LEVEL_WIDTH-20, 2,2, "N")
         self.makeBuilding(13*LEVEL_WIDTH  + LEVEL_WIDTH-23, 4,2, "N")
         self.makeBuilding(7*LEVEL_WIDTH  + LEVEL_WIDTH-26, 2,2, "S")
 
@@ -74,21 +71,27 @@ class Level (object):
             if door == "S":
                 self._map[pos+width*LEVEL_WIDTH] = 0 
 
-    def makeForest(self, pos, size):
-        for i in range(size):
-            self._map[pos-i] = 2
-            self._map[pos+i] = 2
-            self._map[pos-LEVEL_WIDTH*i] = 2
-            self._map[pos+LEVEL_WIDTH*i] = 2
+    def areaRange(self, value):
+        if value < len(self._map) and value >= 0 and self._map[value] != 3:
+            self._map[value] = 1
+
+    def makeDecay(self, pos, size):
+        for i in range(int(size)):
+            self.areaRange(pos-i)
+            self.areaRange(pos+i)
+            self.areaRange(pos-LEVEL_WIDTH*i)
+            self.areaRange(pos+LEVEL_WIDTH*i)
             for w in range(i+1):
-                self._map[pos-LEVEL_WIDTH*i-w] = 2
-                self._map[pos+LEVEL_WIDTH*i-w] = 2
-                self._map[pos-LEVEL_WIDTH*i+w] = 2
-                self._map[pos+LEVEL_WIDTH*i+w] = 2
-                self._map[pos-i-w*LEVEL_WIDTH] = 2
-                self._map[pos+i-w*LEVEL_WIDTH] = 2
-                self._map[pos-i+w*LEVEL_WIDTH] = 2
-                self._map[pos+i+w*LEVEL_WIDTH] = 2
+                self.areaRange(pos-LEVEL_WIDTH*i-w)
+                self.areaRange(pos+LEVEL_WIDTH*i-w)
+                self.areaRange(pos-LEVEL_WIDTH*i+w)
+                self.areaRange(pos+LEVEL_WIDTH*i+w)
+                self.areaRange(pos-i-w*LEVEL_WIDTH)
+                self.areaRange(pos+i-w*LEVEL_WIDTH)
+                self.areaRange(pos-i+w*LEVEL_WIDTH)
+                self.areaRange(pos+i+w*LEVEL_WIDTH)
+
+
     def makeZomArea(self, pos, power):
         pass
 

@@ -82,10 +82,10 @@ class Player (Character):
 
     def materialize (self,screen,x,y):
         OBJECTS.append(self)
-        screen.add(self,x,y)
         self._screen = screen
         self._x = x
         self._y = y
+        self._screen.add(self,self._x,self._y)
         outside = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
         outside.setFill("lightgray")
         outside.setOutline("black")

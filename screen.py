@@ -16,7 +16,7 @@ class Screen (object):
         self._current = []
         self._hub = "Default"
         self._dialogue = "talk"
-        self.init_move(cy,  cx)
+        # self.init_move(cy,  cx)
         self._buttons = []
         self._bText = []
         self._dButtons = []
@@ -32,7 +32,7 @@ class Screen (object):
         buttonText = Text(Point(xMid, start+(3*pos+2)*part), text)
         self._buttons.append(button)
         self._bText.append(buttonText)
-        button.setFill("darkgrey")
+        button.setFill("grey")
         button.draw(self._window)
         buttonText.draw(self._window)
 
@@ -77,6 +77,14 @@ class Screen (object):
             words.draw(self._window)
             self._dExtra.append(words)
             words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+120), "Strength: " + str(items[0]._power))
+            words.draw(self._window)
+            self._dExtra.append(words)
+            self._dialogue = "talk"
+        if status == "Statue":
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+80), knowledge)
+            words.draw(self._window)
+            self._dExtra.append(words)
+            words = Text(Point(WINDOW_WIDTH/2,WINDOW_WIDTH+100), "Health: " + str(items[0]._health))
             words.draw(self._window)
             self._dExtra.append(words)
             self._dialogue = "talk"

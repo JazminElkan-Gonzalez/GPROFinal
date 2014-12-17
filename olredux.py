@@ -35,32 +35,50 @@ def main ():
 
     level = Level()
     log ("level created")
-    playerX = LEVEL_WIDTH-18
+    playerX = LEVEL_WIDTH-34
     playerY = 11
     scr = Screen(level,window,playerX ,playerY)
     log ("screen created")
 
     q = EventQueue()
 
-    OlinStatue("Olin statue","A statue of F. W. Olin", 5000).materialize(scr,20,20)
 
-    # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
-    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
+    #Strat Area
+    Zombie("ZOMZOM", "Your Only friend. Wake her up when you need her!! ", 50).register(q,100).materialize(scr,LEVEL_WIDTH-34,10)
+    OlinStatue("King statue","King Prometheus once ruled these lands fairly. He was much loved", 5000).materialize(scr,LEVEL_WIDTH-35,10)
+    
+    #Zombies
+    Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,100).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-21)
+    Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,10).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-21)
+    zombieNames = ["Rhionnon", "Suellen", "Dewey", "Dortha", "Salvador", "Earlean", "Terence", "Earlean", "Terence", "Norman", "Chaya", "Cameron", "Sharee", "Blondell", "Charles", "Kori", "Florencia", "Gayle", "Lin", "Devona", "Trina", "Tessie"]
+    for i in range(20):
+        Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,(20-i+1)*10).materialize(scr,random.randrange(LEVEL_WIDTH/2-10),random.randrange(LEVEL_HEIGHT))
+    
+    Zombie("King Prometheus the Green", "Your Biggest Mistake....", 2100).register(q,(i+1)*10).materialize(scr,LEVEL_WIDTH-10,10)
+
+    #Castle
     Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,LEVEL_WIDTH-5,15)
+    Rat("Brain","A rat with a big head", 50).register(q,600).materialize(scr,LEVEL_WIDTH-9,9)
+    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,LEVEL_WIDTH-11,11)
+    
     #Town Folk
     fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)
-    NPC("Bub","Blacksmith", 5, "It's so hard to make a living these days...", [fluf]).register(q,400).materialize(scr,LEVEL_WIDTH-20,7)
+    flaf = Feather("Feather", "A fluffy feather. I bet Zombies like it!", 10)
+    NPC("Bub","Blacksmith", 5, "It's so hard to make a living these days...", [fluf, flaf]).register(q,400).materialize(scr,LEVEL_WIDTH-20,7)
     NPC("Sarah","Child", 5, "Mommy and Daddy went south... but they have not come back... :(", []).register(q,400).materialize(scr,LEVEL_WIDTH-26,7)
     NPC("Carter","Warrior", 5, "Lotta folks gon missin out west", []).register(q,400).materialize(scr,LEVEL_WIDTH-25,13)
     NPC("Gregory","Grizzled Old Man", 5, "Stay away from gravestones with large decayed areas around them", []).register(q,400).materialize(scr,LEVEL_WIDTH-21,13)
     NPC("Anthony","Servant of The Court", 5, "Beware! The king has been behaving strangely...", []).register(q,400).materialize(scr,LEVEL_WIDTH-17,11)
-    Zombie("ZOMZOM", "ZOOM ZOOM", 50).register(q,100).materialize(scr,28,23)
-    Zombie("brains", "A ZOMBIE WHO LIKES BRAINSSSSS", 50).register(q,100).materialize(scr,28,22)
-    flaf = Feather("Feather", "A fluffy feather. I bet Zombies like it!", 10)
+
+
+    scr.init_move(playerY,  playerX)
+    for item in OBJECTS:
+        scr.add(item,item._x,item._y)
 
     create_panel(window)
+    p = Player(30, "Life Mage", [], 10).materialize(scr,playerX ,playerY)
 
-    p = Player(30, "...what's your name, bub?...", [flaf], 10).materialize(scr,playerX ,playerY)
+
 
     q.enqueue(1,CheckInput(window,p))
     q.enqueue(1,scr)

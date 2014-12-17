@@ -89,7 +89,6 @@ class Thing (Root):
     # where you want it to appear
     def materialize (self,screen,x,y):
         OBJECTS.append(self)
-        screen.add(self,x,y)
         self._screen = screen
         self._x = x
         self._y = y

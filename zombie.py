@@ -17,7 +17,7 @@ class Zombie (Character):
         self._pic = 'gravestone.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic)
         
-        self._power = 5
+        self._power = health/10
         self._origHealth = health
         self._zombies = [self]
 
@@ -43,7 +43,8 @@ class Zombie (Character):
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
-            self.die()  #temporary to test friend functionality
+            if self._name == "ZOMZOM":
+                self.die()
         else:
             words = Text(self._sprite.p1, "GRR")
             words.draw(self._screen._window)
@@ -184,3 +185,15 @@ class Zombie (Character):
                         if not ((thing == self.player or (isinstance(thing, NPC) and self._status == "friend" and thing != self._attackObject) or (isinstance(thing,Zombie) and thing._status == "friend")) and self._status == "friend"):
                             thing.updateHealth(-self._power)
                                 #TODO: fix that one attacks more than the other
+
+    def materialize (self,screen,x,y):
+        OBJECTS.append(self)
+        self._screen = screen
+        self._x = x
+        self._y = y
+        if self._name != "King Prometheus the Green":
+            self._screen._level.makeDecay(self._y*LEVEL_WIDTH+self._x, round(self._power/5))
+        else:
+            self._screen._level.makeDecay(self._y*LEVEL_WIDTH+self._x, 6)
+
+        return self
