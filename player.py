@@ -105,7 +105,10 @@ class Player (Character):
             elt.setOutline('darkgrey')
             elt.draw(self._screen._window)
             if i < len(self._items):
-                self._items[i]._sprite.move(posX - self._items[i]._sprite.p1.x, posY - self._items[i]._sprite.p1.y)
+                if isinstance(self._items[i]._sprite, Rectangle):
+                    self._items[i]._sprite.move(posX - self._items[i]._sprite.p1.x, posY - self._items[i]._sprite.p1.y)
+                elif isinstance(self._items[i]._sprite, Image):
+                    self._items[i]._sprite.move(posX - self._items[i]._sprite.getAnchor().x+TILE_SIZE/2, posY - self._items[i]._sprite.getAnchor().y+TILE_SIZE/2)
                 self._items[i]._sprite.draw(self._screen._window)         
 
         return self

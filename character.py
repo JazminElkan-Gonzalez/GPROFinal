@@ -15,7 +15,10 @@ class Character (Thing):
             xDef = 80 + (i%10)*(TILE_SIZE+2) 
             yDef = WINDOW_HEIGHT + 100 + math.floor(i/10)*(TILE_SIZE+2)
             items[i].pickup(self)
-            items[i]._sprite.move(xDef - items[i]._sprite.p1.x, yDef - items[i]._sprite.p1.y)
+            if isinstance(items[i]._sprite, Rectangle):
+                items[i]._sprite.move(xDef - items[i]._sprite.p1.x, yDef - items[i]._sprite.p1.y)
+            elif isinstance(items[i]._sprite, Image):
+                items[i]._sprite.move(xDef - items[i]._sprite.getAnchor().x+TILE_SIZE/2, yDef - items[i]._sprite.getAnchor().y+TILE_SIZE/2)
 
     def addInventory(self, item):
         self._items.append(item)

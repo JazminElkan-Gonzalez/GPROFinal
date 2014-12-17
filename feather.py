@@ -9,7 +9,11 @@ class Feather  (Thing):
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("yellow")
         rect.setOutline("yellow")
-        self._sprite = rect
+
+        self._pic = 'feather.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic)
+
+        # self._sprite = rect
         self._user = None
         self._price = 10
 
