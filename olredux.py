@@ -35,8 +35,9 @@ def main ():
 
     level = Level()
     log ("level created")
-
-    scr = Screen(level,window,25,25)
+    playerX = LEVEL_WIDTH-18
+    playerY = 11
+    scr = Screen(level,window,playerX ,playerY)
     log ("screen created")
 
     q = EventQueue()
@@ -45,16 +46,21 @@ def main ():
 
     # Rat("Brain","A rat with a big head").register(q,600).materialize(scr,10,30)
     Rat("Pinky","A rat", 50).register(q,400).materialize(scr,30,30)
-    Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,26,26)
+    Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,LEVEL_WIDTH-5,15)
+    #Town Folk
     fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)
-    NPC("Bub","Blacksmith", 5, "There are Zombies out there!!!", [fluf]).register(q,400).materialize(scr,10,10)
+    NPC("Bub","Blacksmith", 5, "It's so hard to make a living these days...", [fluf]).register(q,400).materialize(scr,LEVEL_WIDTH-20,7)
+    NPC("Sarah","Child", 5, "Mommy and Daddy went south... but they have not come back... :(", []).register(q,400).materialize(scr,LEVEL_WIDTH-26,7)
+    NPC("Carter","Warrior", 5, "Lotta folks gon missin out west", []).register(q,400).materialize(scr,LEVEL_WIDTH-25,13)
+    NPC("Gregory","Grizzled Old Man", 5, "Stay away from gravestones with large decayed areas around them", []).register(q,400).materialize(scr,LEVEL_WIDTH-21,13)
+    NPC("Anthony","Servant of The Court", 5, "Beware! The king has been behaving strangely...", []).register(q,400).materialize(scr,LEVEL_WIDTH-17,11)
     Zombie("ZOMZOM", "ZOOM ZOOM", 50).register(q,100).materialize(scr,28,23)
     Zombie("brains", "A ZOMBIE WHO LIKES BRAINSSSSS", 50).register(q,100).materialize(scr,28,22)
     flaf = Feather("Feather", "A fluffy feather. I bet Zombies like it!", 10)
 
     create_panel(window)
 
-    p = Player(30, "...what's your name, bub?...", [flaf], 10).materialize(scr,25,25)
+    p = Player(30, "...what's your name, bub?...", [flaf], 10).materialize(scr,playerX ,playerY)
 
     q.enqueue(1,CheckInput(window,p))
     q.enqueue(1,scr)
