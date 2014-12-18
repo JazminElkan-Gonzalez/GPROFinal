@@ -49,8 +49,8 @@ def main ():
     OlinStatue("King statue","King Prometheus once ruled these lands fairly. He was much loved", 5000).materialize(scr,LEVEL_WIDTH-35,10)
     
     #Zombies
-    Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,50).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-21)
-    Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,50).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-21)
+    Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,50).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-30)
+    Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,50).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-30)
     zombieNames = ["Rhionnon", "Suellen", "Dewey", "Dortha", "Salvador", "Earlean", "Terence", "Earlean", "Terence", "Norman", "Chaya", "Cameron", "Sharee", "Blondell", "Charles", "Kori", "Florencia", "Gayle", "Lin", "Devona", "Trina", "Tessie"]
     for i in range(len(zombieNames)):
         x = random.randrange(1,LEVEL_WIDTH/2-10)
@@ -61,8 +61,8 @@ def main ():
 
     #Castle
     Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,LEVEL_WIDTH-5,15)
-    Rat("Brain","A rat with a big head", 50).register(q,600).materialize(scr,LEVEL_WIDTH-9,9)
-    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,LEVEL_WIDTH-11,11)
+    Rat("Brain","A rat with a big head", 50).register(q,600).materialize(scr,LEVEL_WIDTH-5,14)
+    Rat("Pinky","A rat", 50).register(q,400).materialize(scr,LEVEL_WIDTH-6,15)
     
     #Town Folk
     fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)

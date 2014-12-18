@@ -75,3 +75,11 @@ def lost (window):
     t.draw(window)
     window.getKey()
     exit(0)
+
+def win (window):
+    t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU WIN!')
+    t.setSize(36)
+    t.setTextColor('red')
+    t.draw(window)
+    window.getKey()
+    exit(0)
