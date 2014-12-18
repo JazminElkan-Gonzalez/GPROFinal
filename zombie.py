@@ -13,13 +13,18 @@ class Zombie (Character):
         rect.setOutline("black")
         self._sprite = rect
 
-        # pic = 'zombie2.gif'
         self._pic = 'gravestone.gif'
-        self._pic2 = 'zombie2.gif'
-        self._pic3 = 'zombieE.gif'
+        if self._name == "King Prometheus the Green":
+            self._pic3 = 'king.gif'
+            self._pic2 = 'kingDead.gif'
+        else:
+            self._pic2 = 'zombie2.gif'
+            self._pic3 = 'zombieE.gif'
+
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic)
-        self._sprite1 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic2)
-        self._sprite2 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic3)
+        self._sprite1 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic3)
+        self._sprite2 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic2)
+
         
         self._power = health/10
         self._origHealth = health
@@ -34,14 +39,14 @@ class Zombie (Character):
         print self._x, self._y
 
     def moveSprite(self,x,y):
-        self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
-        self._sprite1.move(dx*TILE_SIZE,dy*TILE_SIZE)
-        self._sprite2.move(dx*TILE_SIZE,dy*TILE_SIZE)
+        self._sprite.move(x,y)
+        self._sprite1.move(x,y)
+        self._sprite2.move(x,y)
 
     def update_pos(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
-        self._sprite.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
+        self.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
         # self.antiDraw()
 
     def walk(self, dx, dy):
@@ -50,7 +55,7 @@ class Zombie (Character):
         if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
             self._y = ny
             self._x = nx
-            self._sprite.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
+            self.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
 
     def wakeUp(self):
         if self._status == "gravestone":
@@ -165,8 +170,6 @@ class Zombie (Character):
             self.die()
 
     def event (self,q):
-        if self._name == "ZOMZOM" or self._name == "Daddy" or self._name == "Mommy":
-            log("event for "+str(self)+" freq: "+str(self._freq))
         isObj = False
         sightRange = 8
         if self._status != "gravestone":

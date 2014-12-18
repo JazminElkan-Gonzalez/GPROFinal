@@ -21,7 +21,7 @@ class Thing (Root):
         return self
 
     def moveSprite(self,x,y):
-        self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
+        self._sprite.move(x,y)
 
     def walk(self, dx, dy):
         nx = self._x + dx
@@ -29,7 +29,7 @@ class Thing (Root):
         if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
             self._y = ny
             self._x = nx
-            self._sprite.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
+            self.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
             # self.antiDraw()
 
 
@@ -83,7 +83,7 @@ class Thing (Root):
     def update_pos(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
-        self._sprite.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
+        self.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
         # self.antiDraw()
 
 

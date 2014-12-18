@@ -28,7 +28,7 @@ class Character (Thing):
         ny = self._y + dy
         if self._screen.tile(nx,ny) == 0:
             if self._screen.tile(nx,ny):
-                self._sprite.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
+                self.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
    
 
     def is_character (self):
