@@ -6,7 +6,6 @@ from player import *
 class Zombie (Character):
     def __init__ (self,name,desc,health):
         Character.__init__(self,name,desc,health, [])
-        log("Zombie.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("grey")

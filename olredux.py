@@ -9,7 +9,7 @@ from cinput import *
 from zombie import *
 from npc import *
 from feather import *
-import cProfile
+
 ############################################################
 #
 # Olinland Redux
@@ -35,11 +35,9 @@ def main ():
                       autoflush=False)
 
     level = Level()
-    log ("level created")
     playerX = LEVEL_WIDTH-34
     playerY = 11
     scr = Screen(level,window,playerX ,playerY)
-    log ("screen created")
 
     q = EventQueue()
 
@@ -95,5 +93,4 @@ def main ():
 
 
 if __name__ == '__main__':
-    # main()
-    cProfile.run('main()')
+    main()

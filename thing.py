@@ -9,11 +9,9 @@ class Thing (Root):
         self._health = health
         self._sprite = Text(Point(TILE_SIZE/2,TILE_SIZE/2),"?")
         self._dead = False
-        log("Thing.__init__ for "+str(self))
 
     def __str__ (self):
         return "<"+self.name()+">"
-
 
     def register (self,q,freq):
         self._freq = freq
@@ -45,7 +43,6 @@ class Thing (Root):
 
     def updateHealth(self, amount):
         if self._health > 0:
-            print self._name,  "lost health: ", self._health
             self._health = self._health + amount
             if isinstance(self._sprite, Image):
                 words = Text(self._sprite.anchor, "SQUEE")
@@ -61,7 +58,6 @@ class Thing (Root):
         self._dead = True
         OBJECTS.remove(self)
         self._sprite.undraw()
-        print self._name + "has died"
 
 
     # return the sprite for display purposes

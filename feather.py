@@ -4,7 +4,6 @@ from thing import *
 class Feather  (Thing):
     def __init__ (self,name,desc, health):
         Thing.__init__(self,name,desc, health)
-        log("Character.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("yellow")
@@ -31,7 +30,6 @@ class Feather  (Thing):
         else:
             OBJECTS.remove(self)
             self._sprite.undraw()
-            print self._name + "has died"
 
     def is_character (self):
         return False

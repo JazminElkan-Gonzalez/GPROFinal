@@ -10,7 +10,6 @@ from zombie import *
 class Rat (Character):
     def __init__ (self,name,desc, health):
         Character.__init__(self,name,desc, health, [])
-        log("Rat.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("red")
@@ -20,7 +19,6 @@ class Rat (Character):
         pic = random.choice(['rat.gif', 'rat2.gif'])
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
 
-        print "Type rat: ", type(rect)
         self._direction = random.randrange(4)
         self._power = 5
     # A helper method to register the Rat with the event queue
@@ -44,7 +42,6 @@ class Rat (Character):
                 self.walk(0,-1)
             if direc == 3:
                 self.walk(0,1)
-            log("event for "+str(self))
             self.register(q,self._freq)
         
     def attack(self):

@@ -5,7 +5,6 @@ import math
 class Player (Character):
     def __init__ (self,health,name, items, gold):
         Character.__init__(self,name,"Yours truly", health, items)
-        log("Player.__init__ for "+str(self))
         pic = 'necromancer.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._healthBar = Rectangle(Point(WINDOW_WIDTH+TILE_SIZE,TILE_SIZE),Point(WINDOW_WIDTH+WINDOW_RIGHTPANEL-TILE_SIZE,2*TILE_SIZE))
@@ -28,10 +27,8 @@ class Player (Character):
         OBJECTS.remove(item)
 
     def changeGold(self, amount):
-        print self._gold
         self._goldText.undraw()
         self._gold = self._gold + amount
-        print self._gold
         self._goldText = Text(Point(WINDOW_WIDTH + 100, WINDOW_HEIGHT), "Gold: " + str(self._gold))
         self._goldText.draw(self._screen._window)
 
