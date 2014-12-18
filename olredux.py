@@ -1,3 +1,15 @@
+
+############################################################
+#
+# The main function
+# 
+# It initializes everything that needs to be initialized
+# Order is important for graphics to display correctly
+# Note that autoflush=False, so we need to explicitly
+# call window.update() to refresh the window when we make
+# changes
+#
+
 from util import *
 from level import *
 from screen import *
@@ -10,24 +22,6 @@ from zombie import *
 from npc import *
 from feather import *
 
-############################################################
-#
-# Olinland Redux
-#
-# Scaffolding to the final project for Game Programming
-#
-#
-
-
-#
-# The main function
-# 
-# It initializes everything that needs to be initialized
-# Order is important for graphics to display correctly
-# Note that autoflush=False, so we need to explicitly
-# call window.update() to refresh the window when we make
-# changes
-#
 def main ():
 
     window = GraphWin("Olinland Redux", 
@@ -42,7 +36,7 @@ def main ():
     q = EventQueue()
 
 
-    #Strat Area
+    #Start Area
     Zombie("ZOMZOM", "Your Only friend. Wake her up when you need her!! ", 50).register(q,28).materialize(scr,LEVEL_WIDTH-34,10)
     OlinStatue("King statue","King Prometheus once ruled these lands fairly. He was much loved", 5000).materialize(scr,LEVEL_WIDTH-35,10)
     
@@ -85,9 +79,7 @@ def main ():
     q.enqueue(1,scr)
 
     while True:
-        # Grab the next event from the queue if it's ready
         q.dequeue_if_ready()
-        # Time unit = 10 milliseconds
         time.sleep(0.01)
 
 

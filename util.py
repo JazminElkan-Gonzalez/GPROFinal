@@ -21,15 +21,6 @@ WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
 WINDOW_RIGHTPANEL = 200
 WINDOW_LEFTPANEL = 200
 
-#############################################################
-# 
-# The class hierarchy for objects that you can interact with
-# in the world
-#
-# Roughly modeled from the corresponding hierarchy in our
-# adventure game
-#
-
 # A helper function that lets you log information to the console
 # with some timing information. I found this super useful to 
 # debug tricky event-based problems.
@@ -51,6 +42,7 @@ MOVE = {
     'Down' : (0,1)
 }
 
+# keeps tracks of possible buttons in menus
 ZOMBIEBUTT = ["Walk", "Attack", "Follow", "Group"]
 NPCBUTT = ["Talk", "Buy", "Heal"]
 
@@ -68,6 +60,8 @@ def create_panel (window):
     fg.setOutline("lightgray")
     fg.draw(window)
 
+# Called when the player loses the game
+# Displays that the player has lost and then closes out the game
 def lost (window):
     t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU LOST!')
     t.setSize(36)
@@ -76,6 +70,8 @@ def lost (window):
     window.getKey()
     exit(0)
 
+# Called when the player wins the game
+# Displays that the player has won and then closes out the game
 def win (window):
     t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU WIN!')
     t.setSize(36)

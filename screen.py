@@ -1,3 +1,12 @@
+#############################################################
+# 
+# The Screen
+#
+# This class handles anything that needs to be displayed
+# This includes the displayed screen along with the hub
+
+
+
 from graphics import *
 from util import *
 import math
@@ -17,12 +26,13 @@ class Screen (object):
         self._current = []
         self._hub = "Default"
         self._dialogue = "talk"
-        # self.init_move(cy,  cx)
         self._buttons = []
         self._bText = []
         self._dButtons = []
         self._dExtra = []
 
+# A helper function that takes a button name and a position
+# to display it on and creates a button
     def makeButton(self, text, pos, part):
         start = 2*TILE_SIZE
         xLeft = WINDOW_WIDTH+TILE_SIZE
@@ -37,6 +47,9 @@ class Screen (object):
         button.draw(self._window)
         buttonText.draw(self._window)
 
+# makeDialogue creates the appropriate dialogue depending on what has been selected
+# This can be information about things selected on the map
+# It can also be the sell,buy and heal functionality of the NPC
     def makeDialogue(self, status, name, knowledge, items):
         name = Text(Point(100,WINDOW_HEIGHT+37), name.capitalize() + " says:")
         bubble = Rectangle(Point(20, WINDOW_HEIGHT + 20), Point(WINDOW_HEIGHT-20, WINDOW_WIDTH+180))
@@ -136,6 +149,10 @@ class Screen (object):
             self._dExtra.append(words)
             self._dialogue = "heal"
 
+
+# MakeHub calls makeButton for all buttons needed in the current menu
+# There are 3 possible menus - directing friendly zombies, interacting with gravestones
+# and talking to NPCs
     def makeHub(self, selected):
         part = (WINDOW_HEIGHT - 2*TILE_SIZE)/16
         for i in range(len(self._buttons)):
@@ -155,9 +172,14 @@ class Screen (object):
             self.makeButton("Buy", 1, part)
             self.makeButton("Heal", 2, part)
 
+# Text that is displayed on the board needs to be tracked
+# so that it can later be removed when the event queue is popped
+# Example when characters are hit and yell "Squee"
     def addText(self,text):
         self._texts.append((text,0))
 
+# Function called by the event queue
+# It removes any old text on the window
     def event(self,q):
         undrawList = [x for x in self._texts if x[1] > 50]
         self._texts[:] = [x for x in self._texts if x[1] <= 50]
@@ -167,53 +189,34 @@ class Screen (object):
             self._texts[i] = (self._texts[i][0], self._texts[i][1] + 1)
         self.register(q,1)
 
+# Registers the Screen back into the event queue
     def register (self,q,freq):
         self._freq = freq
         q.enqueue(freq,self)
         return self
 
+# This handles any movement needed by the screen itself based on changes made by the player. 
     def move(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
         for tile in self._current:
             tile.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
-            if isinstance(tile, Rectangle):
-                if tile.p1.x < 0 and tile.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.p1.y < 0 and title.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                    tile.undraw()
-                    self._current.remove(tile)
-            elif isinstance(tile, Image):
-                if tile.anchor.x < 0 and tile.anchor.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.anchor.y < 0 and title.anchor.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                    tile.undraw()
-                    self._current.remove(tile)
+            if tile.anchor.x < 0 and tile.anchor.x/TILE_SIZE +1 > VIEWPORT_WIDTH and tile.anchor.y < 0 and title.anchor.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+                tile.undraw()
+                self._current.remove(tile)
 
-
-    def find_colors(self, x,y, elt):
-        if self.tile(x,y) == 0:
-            elt.setFill('lightgreen')
-            elt.setOutline('lightgreen')
-        if self.tile(x,y) == 1:
-            elt.setFill('green')
-            elt.setOutline('green')
-        elif self.tile(x,y) == 2:
-            elt.setFill('sienna')
-            elt.setOutline('sienna')
-        elif self.tile(x,y) == 3:
-            elt.setFill('darkgrey')
-            elt.setOutline('darkgrey')
-
+# Finds the appropriate image needed for each terain type
     def find_images(self,x,y):
         if self.tile(x,y) == 0:
-            # return 'lightGrass.gif'
             return 'lightGrassBrown.gif'
         elif self.tile(x,y) == 1:
-            # return 'grass.gif'
             return 'grassBrown.gif'
         elif self.tile(x,y) == 2:
-            # return 'tree.gif'
             return 'treeBrown.gif'
         elif self.tile(x,y) == 3:
             return 'wall.gif'
 
+# moves the screen to display the correct starting screen
     def init_move(self, cy, cx):
         dx = (VIEWPORT_WIDTH-1)/2
         dy = (VIEWPORT_HEIGHT-1)/2
@@ -222,17 +225,15 @@ class Screen (object):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
                 elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),self.find_images(x,y))
-                # elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                 self._current.append(elt)
-                if isinstance(elt, Rectangle):
-                    self.find_colors(x,y, elt)
                 elt.draw(self._window)
         self.move(0,0)
 
-
+# Returns the tile at the corresponding position
     def tile (self,x,y):
         return self._level.tile(x,y)
 
+# Adds the object sprites to the screen
     def add (self,item,x,y):
         if isinstance(item, Zombie):
             item._sprite2.move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
@@ -242,7 +243,7 @@ class Screen (object):
         item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
         item.sprite().draw(self._window)
 
-
+# Getter method for the screen's window
     def window (self):
         return self._window
 

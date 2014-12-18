@@ -1,8 +1,11 @@
+#############################################################
+#
+# A Statue that is placed at the enterence of the game
+# Tells the player the initial story
+#
+
 from thing import *
-#
-# Example of a kind of thing with its specific sprite
-# (here, a rather boring gray rectangle.)
-#
+
 class OlinStatue (Thing):
     def __init__ (self,name,desc, health):
         Thing.__init__(self,name,desc, health)
