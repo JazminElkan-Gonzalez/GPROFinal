@@ -24,11 +24,6 @@ class NPC (Character):
         player.changeGold(-item._price)
         player.addInventory(item)
         self._screen._dButtons.remove(item)
-
-
-    def event (self,q):
-        log("event for "+str(self))
-        self.register(q,self._freq)
         
     def talk(self):
         self._screen.makeDialogue("talk", self._name, self._knowledge, self._items)

@@ -57,7 +57,7 @@ def main ():
         y = random.randrange(1,LEVEL_HEIGHT-1)
         Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,50).materialize(scr,x,y)
     
-    Zombie("King Prometheus the Green", "Your Biggest Mistake....", 2100).register(q,(i+1)*10).materialize(scr,LEVEL_WIDTH-10,10)
+    Zombie("King Prometheus the Green", "Your Biggest Mistake....", 2100).register(q,100).materialize(scr,LEVEL_WIDTH-10,10)
 
     #Castle
     Feather("FeatheryFeather", "A fluffy feather. I bet Zombies like it!", 10).materialize(scr,LEVEL_WIDTH-5,15)

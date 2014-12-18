@@ -168,7 +168,9 @@ class Zombie (Character):
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
                 newX, newY = self.walkTo(self._attackObject._x, self._attackObject._y)
-                if self._attackObject._dead == True or self._attackObject._status == "friend":
+                if isinstance(self._attackObject, Zombie) and self._attackObject._status == "friend":
+                    self._movement = "follow"
+                elif self._attackObject._dead == True:
                     self._movement = "follow"
             if self._movement == "walkTo":
                 newX, newY = self.walkTo(self._walkToX, self._walkToY)
