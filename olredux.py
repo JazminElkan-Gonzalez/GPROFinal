@@ -9,6 +9,7 @@ from cinput import *
 from zombie import *
 from npc import *
 from feather import *
+import cProfile
 ############################################################
 #
 # Olinland Redux
@@ -44,17 +45,17 @@ def main ():
 
 
     #Strat Area
-    Zombie("ZOMZOM", "Your Only friend. Wake her up when you need her!! ", 50).register(q,100).materialize(scr,LEVEL_WIDTH-34,10)
+    Zombie("ZOMZOM", "Your Only friend. Wake her up when you need her!! ", 50).register(q,28).materialize(scr,LEVEL_WIDTH-34,10)
     OlinStatue("King statue","King Prometheus once ruled these lands fairly. He was much loved", 5000).materialize(scr,LEVEL_WIDTH-35,10)
     
     #Zombies
-    Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,100).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-21)
-    Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,10).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-21)
+    Zombie("Mommy", "A ZOMBIE WHO LIKES BRAINSSSSS", 10).register(q,50).materialize(scr,LEVEL_WIDTH-20,LEVEL_HEIGHT-21)
+    Zombie("Daddy", "GIVE ME YOUR FACE", 50).register(q,50).materialize(scr,LEVEL_WIDTH-21,LEVEL_HEIGHT-21)
     zombieNames = ["Rhionnon", "Suellen", "Dewey", "Dortha", "Salvador", "Earlean", "Terence", "Earlean", "Terence", "Norman", "Chaya", "Cameron", "Sharee", "Blondell", "Charles", "Kori", "Florencia", "Gayle", "Lin", "Devona", "Trina", "Tessie"]
-    for i in range(20):
+    for i in range(len(zombieNames)):
         x = random.randrange(1,LEVEL_WIDTH/2-10)
         y = random.randrange(1,LEVEL_HEIGHT-1)
-        Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,(20-i+1)*10).materialize(scr,x,y)
+        Zombie(zombieNames[i], "GGRRRRAAAAWWWWWW", (i+1)*10).register(q,50).materialize(scr,x,y)
     
     Zombie("King Prometheus the Green", "Your Biggest Mistake....", 2100).register(q,(i+1)*10).materialize(scr,LEVEL_WIDTH-10,10)
 
@@ -66,11 +67,11 @@ def main ():
     #Town Folk
     fluf = Feather("Feathery", "A fluffy feather. I bet Zombies like it!", 10)
     flaf = Feather("Feather", "A fluffy feather. I bet Zombies like it!", 10)
-    NPC("Bub","Blacksmith", 5, "It's so hard to make a living these days...", [fluf, flaf]).register(q,400).materialize(scr,LEVEL_WIDTH-20,7)
-    NPC("Sarah","Child", 5, "Mommy and Daddy went south... but they have not come back... :(", []).register(q,400).materialize(scr,LEVEL_WIDTH-26,7)
-    NPC("Carter","Warrior", 5, "Lotta folks gon missin out west", []).register(q,400).materialize(scr,LEVEL_WIDTH-25,13)
-    NPC("Gregory","Grizzled Old Man", 5, "Stay away from gravestones with large decayed areas around them", []).register(q,400).materialize(scr,LEVEL_WIDTH-21,13)
-    NPC("Anthony","Servant of The Court", 5, "Beware! The king has been behaving strangely...", []).register(q,400).materialize(scr,LEVEL_WIDTH-17,11)
+    NPC("Bub","Blacksmith", 5, "It's so hard to make a living these days...", [fluf, flaf]).materialize(scr,LEVEL_WIDTH-20,7)
+    NPC("Sarah","Child", 5, "Mommy and Daddy went south... but they have not come back... :(", []).materialize(scr,LEVEL_WIDTH-26,7)
+    NPC("Carter","Warrior", 5, "Lotta folks gon missin out west", []).materialize(scr,LEVEL_WIDTH-25,13)
+    NPC("Gregory","Grizzled Old Man", 5, "Stay away from gravestones with large decayed areas around them", []).materialize(scr,LEVEL_WIDTH-21,13)
+    NPC("Anthony","Servant of The Court", 5, "Beware! The king has been behaving strangely...", []).materialize(scr,LEVEL_WIDTH-17,11)
 
 
     scr.init_move(playerY,  playerX)
@@ -94,4 +95,5 @@ def main ():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    cProfile.run('main()')

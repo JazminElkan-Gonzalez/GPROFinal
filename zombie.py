@@ -35,8 +35,8 @@ class Zombie (Character):
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setFill("darkgreen")
                 self._sprite.setOutline("red")
-            else: 
-                self._pic = 'zombie2.gif'
+            elif isinstance(self._sprite, Image):
+                self._pic = 'zombieE.gif'
                 self._sprite.undraw()
                 self._sprite = Image(self._sprite.getAnchor(),self._pic)
                 self._sprite.draw(self._screen._window)
@@ -56,6 +56,11 @@ class Zombie (Character):
             self._movement = "follow"
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setOutline("green")
+            elif isinstance(self._sprite, Image): 
+                self._pic = 'zombie2.gif'
+                self._sprite.undraw()
+                self._sprite = Image(self._sprite.getAnchor(),self._pic)
+                self._sprite.draw(self._screen._window)
             self._health = self._origHealth
         # elif self._status == "friend":
         #     self.die()
@@ -73,7 +78,7 @@ class Zombie (Character):
         # self._zombies.append(zombie)
         self._health = self._health + zombie._health
         self._power = self._power + zombie._power
-        # self._freq = self._freq + 20
+        # self._freq = self._freq + zombie._freq
 
     def combine(self,partner):
         if isinstance(partner, Zombie) and partner != self:
@@ -83,13 +88,14 @@ class Zombie (Character):
             else:
                 self._zombies.append(partner)
             self.addZombieStats(partner)
-            self._freq = 7*len(self._zombies)+100
+            self._freq = 7*len(self._zombies)+14
             
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setOutline("yellow")
             
             self._description = "A zombie hoard!!"
-            self._name = self._name + " the hoard leader"
+            if "the hoard leader" not in self._name:
+                self._name = self._name + " the hoard leader"
 
             partner._status = "hoard"
             partner._power = 0
@@ -121,8 +127,9 @@ class Zombie (Character):
         return newX, newY
 
     def setAttack(self,attackObject):
-        self._attackObject = attackObject
-        self._movement = "attack"
+        if attackObject != None:
+            self._attackObject = attackObject
+            self._movement = "attack"
 
     def updateHealth(self, amount):
         if self._status == "gravestone":
@@ -134,10 +141,12 @@ class Zombie (Character):
             words = Text(self._sprite.p1, "SQUEE")
         words.draw(self._screen._window)
         self._screen.addText(words)
-        if self._health == 0:
+        if self._health <= 0:
             self.die()
 
     def event (self,q):
+        if self._name == "ZOMZOM" or self._name == "Daddy" or self._name == "Mommy":
+            log("event for "+str(self)+" freq: "+str(self._freq))
         isObj = False
         sightRange = 8
         if self._status != "gravestone":
@@ -157,7 +166,7 @@ class Zombie (Character):
                 newX, newY = self.followPlayer()
             if self._movement == "attack":
                 newX, newY = self.walkTo(self._attackObject._x, self._attackObject._y)
-                if self._attackObject._dead == True:
+                if self._attackObject._dead == True or self._attackObject._status == "friend":
                     self._movement = "follow"
             if self._movement == "walkTo":
                 newX, newY = self.walkTo(self._walkToX, self._walkToY)

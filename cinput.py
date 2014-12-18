@@ -150,7 +150,6 @@ class CheckInput (object):
             self._selected._movement = "walkTo"
             self._selected._walkToX, self._selected._walkToY = self.clickPos(mouse)
         elif self._buttonState == "Attack":
-            self._selected._movement = "attack"
             self._selected.setAttack(self.findObject(mouse, OBJECTS))
         elif self._buttonState == "Group":
             self._selected.combine(self.findObject(mouse, OBJECTS))
