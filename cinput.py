@@ -105,10 +105,6 @@ class CheckInput (object):
                 self._player._screen._buttons[i].setFill('darkgray')
                 #self._player._screen._buttons[i].draw(self._window)
                 if self._player._screen._hub == "Friend":
-                    if i == 4: #mode
-                        self._player._screen._hub = "Default"
-                        self._selected = None
-                        self._player._screen.makeHub(self._selected)
                     if i == 2: #follow
                         self._selected._movement = "follow"
                         self._player._screen._hub = "Default"

@@ -51,7 +51,7 @@ MOVE = {
     'Down' : (0,1)
 }
 
-ZOMBIEBUTT = ["Walk", "Attack", "Follow", "Group", "Mode"]
+ZOMBIEBUTT = ["Walk", "Attack", "Follow", "Group"]
 NPCBUTT = ["Talk", "Buy", "Heal"]
 
 #
