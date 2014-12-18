@@ -40,8 +40,11 @@ class Player (Character):
 # When the player finds gold or pays for healing and buying items, gold must be added or removed
 # This updates the gold value and draws the appropriate value on the hub
     def changeGold(self, amount):
+        if self._gold + amount <= 0:
+            self._gold = 0
+        else:
+            self._gold = self._gold + amount
         self._goldText.undraw()
-        self._gold = self._gold + amount
         self._goldText = Text(Point(WINDOW_WIDTH + 100, WINDOW_HEIGHT), "Gold: " + str(self._gold))
         self._goldText.draw(self._screen._window)
 
