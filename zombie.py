@@ -15,7 +15,11 @@ class Zombie (Character):
 
         # pic = 'zombie2.gif'
         self._pic = 'gravestone.gif'
+        self._pic2 = 'zombie2.gif'
+        self._pic3 = 'zombieE.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic)
+        self._sprite1 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic2)
+        self._sprite2 = Image(Point(TILE_SIZE/2,TILE_SIZE/2),self._pic3)
         
         self._power = health/10
         self._origHealth = health
@@ -29,6 +33,25 @@ class Zombie (Character):
     def move(self,newX,newY):
         print self._x, self._y
 
+    def moveSprite(self,x,y):
+        self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
+        self._sprite1.move(dx*TILE_SIZE,dy*TILE_SIZE)
+        self._sprite2.move(dx*TILE_SIZE,dy*TILE_SIZE)
+
+    def update_pos(self, dx, dy):
+        vX = VIEWPORT_WIDTH-1
+        vY = VIEWPORT_HEIGHT-1
+        self._sprite.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
+        # self.antiDraw()
+
+    def walk(self, dx, dy):
+        nx = self._x + dx
+        ny = self._y + dy
+        if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
+            self._y = ny
+            self._x = nx
+            self._sprite.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
+
     def wakeUp(self):
         if self._status == "gravestone":
             self._status = "enemy"
@@ -36,10 +59,7 @@ class Zombie (Character):
                 self._sprite.setFill("darkgreen")
                 self._sprite.setOutline("red")
             elif isinstance(self._sprite, Image):
-                self._pic = 'zombieE.gif'
                 self._sprite.undraw()
-                self._sprite = Image(self._sprite.getAnchor(),self._pic)
-                self._sprite.draw(self._screen._window)
             for thing in OBJECTS:
                 if thing.is_player():
                     self.player = thing
@@ -57,17 +77,15 @@ class Zombie (Character):
             if isinstance(self._sprite, Rectangle):
                 self._sprite.setOutline("green")
             elif isinstance(self._sprite, Image): 
-                self._pic = 'zombie2.gif'
                 self._sprite.undraw()
-                self._sprite = Image(self._sprite.getAnchor(),self._pic)
-                self._sprite.draw(self._screen._window)
+                self._sprite1.undraw()
             self._health = self._origHealth
         # elif self._status == "friend":
         #     self.die()
         #     self._dead = True
         elif self._status == "hoard" or self._status == "friend": 
             OBJECTS.remove(self)
-            self._sprite.undraw()
+            self._sprite2.undraw()
             self._status = "friend"
             self._dead = True
         if self._name == "King Prometheus the Green":

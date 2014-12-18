@@ -1,6 +1,7 @@
 from graphics import *
 from util import *
 import math
+from zombie import *
 
 class Screen (object):
     def __init__ (self,level,window,cx,cy):
@@ -234,6 +235,11 @@ class Screen (object):
         return self._level.tile(x,y)
 
     def add (self,item,x,y):
+        if isinstance(item, Zombie):
+            item._sprite2.move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
+            item._sprite2.draw(self._window)   
+            item._sprite1.move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
+            item._sprite1.draw(self._window)          
         item.sprite().move((x-(self._cx-(VIEWPORT_WIDTH-1)/2))*TILE_SIZE,(y-(self._cy-(VIEWPORT_HEIGHT-1)/2))*TILE_SIZE)
         item.sprite().draw(self._window)
 
