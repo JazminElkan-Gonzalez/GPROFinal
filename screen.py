@@ -139,7 +139,7 @@ class Screen (object):
             for i in range(len(items)):
                 items[i]._sprite.draw(self._window)
                 thing = items[i]
-                thingText = Text(Point(items[i]._sprite.anchor.x+TILE_SIZE/2, items[i]._sprite.anchor.y+TILE_SIZE/2), str(items[i]._price))
+                thingText = Text(items[i]._sprite.anchor, str(items[i]._price))
                 thingText.draw(self._window)
                 self._dButtons.append(thing)
                 self._dExtra.append(thingText)

@@ -28,7 +28,7 @@ class Player (Character):
         self._items.append(item)
         posX = WINDOW_WIDTH + 20 + ((len(self._items)-1)%5)*(TILE_SIZE+2)
         posY = WINDOW_HEIGHT + 20 + math.floor((len(self._items)-1)/5)*(TILE_SIZE+2)
-        item._sprite.move(posX - item._sprite.p1.x, posY - item._sprite.p1.y)
+        item._sprite.move(posX - item._sprite.anchor.x+TILE_SIZE/2, posY - item._sprite.anchor.y+TILE_SIZE/2)
 
 # When the player picks something up from the floor it must remove the item from the world objects list
 # It also needs to add it to the inventory of the player

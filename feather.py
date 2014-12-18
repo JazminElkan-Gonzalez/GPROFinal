@@ -36,10 +36,10 @@ class Feather  (Thing):
 # Destroys the Feather when it is out of uses, or zombies killed it
     def die(self):
         if self._user != None:
-            self._user._inventory.remove(self)
+            self._user._items.remove(self)
         else:
             OBJECTS.remove(self)
-            self._sprite.undraw()
+        self._sprite.undraw()
 
 # Check function to indicate what this "thing" is. This allows us to check the "type" of an object
 # without having to us isinstance() 

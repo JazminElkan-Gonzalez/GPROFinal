@@ -29,6 +29,7 @@ class NPC (Character):
         player.changeGold(-item._price)
         player.addInventory(item)
         self._screen._dButtons.remove(item)
+        item.pickup(player)
        
 # the talk function calls screen to display any knowledge the NPC has in a dialogue box 
     def talk(self):

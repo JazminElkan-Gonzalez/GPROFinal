@@ -196,7 +196,7 @@ class CheckInput (object):
             bought = self.findObject(mouse, self._player._screen._dButtons)
             if bought != None:
                 if bought._price <= self._player._gold:
-                    rect = Rectangle(bought._sprite.p1, bought._sprite.p2)
+                    rect = Rectangle(Point(bought._sprite.anchor.x - (TILE_SIZE/2),bought._sprite.anchor.y-(TILE_SIZE/2)),Point(bought._sprite.anchor.x + (TILE_SIZE/2),bought._sprite.anchor.y+(TILE_SIZE/2)))
                     rect.setFill('grey')
                     rect.setOutline('darkgrey')
                     rect.draw(self._window)
