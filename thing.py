@@ -20,25 +20,28 @@ class Thing (Root):
         q.enqueue(freq,self)
         return self
 
+    def moveSprite(self,x,y):
+        self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
+
     def walk(self, dx, dy):
         nx = self._x + dx
         ny = self._y + dy
         if self._screen.tile(nx,ny) == 0 or self._screen.tile(nx,ny) == 1:
             self._y = ny
             self._x = nx
-            self._sprite.move(dx*TILE_SIZE,dy*TILE_SIZE)
-            self.antiDraw()
+            self._sprite.moveSprite(dx*TILE_SIZE,dy*TILE_SIZE)
+            # self.antiDraw()
 
 
-    def antiDraw(self):
-        if isinstance(self._sprite, Image):
-            xLeft = self._sprite.getAnchor().x - TILE_SIZE/2
-            yLeft = self._sprite.getAnchor().y - TILE_SIZE/2
-            if xLeft < 0 and xLeft/TILE_SIZE +1 > VIEWPORT_WIDTH and yLeft < 0 and yLeft/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                self._sprite.undraw()        
-        else:            
-            if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
-                self._sprite.undraw()        
+    # def antiDraw(self):
+    #     if isinstance(self._sprite, Image):
+    #         xLeft = self._sprite.getAnchor().x - TILE_SIZE/2
+    #         yLeft = self._sprite.getAnchor().y - TILE_SIZE/2
+    #         if xLeft < 0 and xLeft/TILE_SIZE +1 > VIEWPORT_WIDTH and yLeft < 0 and yLeft/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+    #             self._sprite.undraw()        
+    #     else:            
+    #         if self._sprite.p1.x < 0 and self._sprite.p1.x/TILE_SIZE +1 > VIEWPORT_WIDTH and self._sprite.p1.y < 0 and self._sprite.p1.y/TILE_SIZE + 1 > VIEWPORT_HEIGHT:
+    #             self._sprite.undraw()        
 
     def updateHealth(self, amount):
         if self._health > 0:
@@ -80,8 +83,8 @@ class Thing (Root):
     def update_pos(self, dx, dy):
         vX = VIEWPORT_WIDTH-1
         vY = VIEWPORT_HEIGHT-1
-        self._sprite.move(-dx*TILE_SIZE,-dy*TILE_SIZE)
-        self.antiDraw()
+        self._sprite.moveSprite(-dx*TILE_SIZE,-dy*TILE_SIZE)
+        # self.antiDraw()
 
 
     # creating a thing does not put it in play -- you have to 
